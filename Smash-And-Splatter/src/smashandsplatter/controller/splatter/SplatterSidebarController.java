@@ -1,6 +1,7 @@
 package smashandsplatter.controller.splatter;
 
 import java.util.Random;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -37,10 +38,12 @@ public class SplatterSidebarController {
     
     @FXML
     public void initialize() {
-        trajectory = new Trajectory();
-        shownFields = new int[3];
+        Platform.runLater(() -> {
+            trajectory = SplatterViewController.getTrajectory();
+            shownFields = new int[3];
         
-        initializeFields();
+            initializeFields(); 
+        });
     }
     
     /**

@@ -32,6 +32,16 @@ public class Trajectory {
         this.yPos = calculateYPos();
         this.distance = calculateDistance();
     }
+
+    public Trajectory(double yPos, double distance, double time, double[] initialVelocity, double[] finalVelocity) {
+        this.yPos = yPos;
+        this.distance = distance;
+        this.time = time;
+        this.initialVelocity = initialVelocity;
+        this.finalVelocity = finalVelocity;
+    }
+    
+    
     
     private double[] calculateFinalVelocity() {
         double[] finalVelocity = new double[2];
