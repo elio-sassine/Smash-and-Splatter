@@ -6,6 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import smashandsplatter.models.Trajectory;
 
+/**
+ * Controller for the SplatterSidebar View
+ * @author eliob
+ */
 public class SplatterSidebarController {
     @FXML
     private Button submit;
@@ -80,6 +84,12 @@ public class SplatterSidebarController {
         }
     }
     
+    /**
+     * Displays the value needed
+     * @param input The text field where the value is being displayed
+     * @param value The value to display (as a double)
+     * @param unit The unit of the value displayed
+     */
     private void displayValue(TextField input, double value, String unit) {
         input.setDisable(true);
         String display = String.format("%s: %.02f %s", input.getPromptText(), value, unit);

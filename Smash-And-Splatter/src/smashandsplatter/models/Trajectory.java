@@ -18,6 +18,9 @@ public class Trajectory {
     private double time;
     private static final double GRAVITY = -9.8;
     
+    /**
+     * Makes a trajectory model with randomized fields
+     */
     public Trajectory() {
         Random rand = new Random();
         this.initialVelocity[0] = Math.round(rand.nextDouble(0.1, 40) * 100) / 100.0;
@@ -46,30 +49,52 @@ public class Trajectory {
         return initialVelocity[0] * time;
     }
 
+    /**
+     * gets the initial velocity as a vector (as an [x, y] array)
+     * @return initial velocity as a vector
+     */
     public double[] getInitialVelocity() {
         return initialVelocity;
     }
 
+    /**
+     * gets the final velocity vector
+     * @return final velocity vector (as an [x, y] array) 
+     */
     public double[] getFinalVelocity() {
         return finalVelocity;
     }
 
+    /**
+     * gets the y position (height)
+     * @return y position (height)
+     */
     public double getyPos() {
         return yPos;
     }
-
+    
+    /**
+     * gets the distance (x)
+     * @return distance (x)
+     */
     public double getDistance() {
         return distance;
     }
 
+    /**
+     * gets the time of the trajectory
+     * @return the time of the trajectory
+     */
     public double getTime() {
         return time;
     }
 
+    /**
+     * makes a string of the trajectory class
+     * @return a string representation of the class
+     */
     @Override
     public String toString() {
         return "Trajectory{" + "initialVelocity=" + initialVelocity + ", finalVelocity=" + finalVelocity + ", yPos=" + yPos + ", distance=" + distance + ", time=" + time + '}';
     }
-    
-    
 }
