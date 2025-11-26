@@ -5,15 +5,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="8.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterSidebarController">
    <children>
       <TextField promptText="X Velocity" fx:id="xVelocity" />
-      <TextField promptText="Initial Y Velocity" />
-      <TextField promptText="Final Y Velocity" />
-      <TextField promptText="x Distance" />
+      <TextField fx:id="initialYVelocity" promptText="Initial Y Velocity" />
+      <TextField fx:id="finalYVelocity" promptText="Final Y Velocity" />
+      <TextField promptText="x Distance" fx:id="xDistance" />
       <TextField fx:id="yPos" promptText="Height" />
-      <TextField promptText="Time" />
+      <TextField fx:id="time" promptText="Time" />
       <Button fx:id="Submit" mnemonicParsing="false" text="Button" />
    </children>
    <padding>
