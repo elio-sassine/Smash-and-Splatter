@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import smashandsplatter.models.Torque;
 
@@ -27,10 +28,10 @@ public class SmashSidebarController implements Initializable {
     private Button submit;
 
     @FXML
-    private TextField torque1Text;
+    private Label torque1Text;
 
     @FXML
-    private TextField torque2Text;
+    private Label torque2Text;
 
     private Torque torque1;
     private Torque torque2;
@@ -58,15 +59,14 @@ public class SmashSidebarController implements Initializable {
      * @param torque the torque object used for the text field
      * @param number which torque it is
      */
-    private void initializeTextField(TextField text, Torque torque, int number) {
+    private void initializeTextField(Label text, Torque torque, int number) {
         text.setText(String.format(
-                    "Torque %d: F = %.2f N, r = %.2f m, Angle = %.2f deg",
+                    "Torque %d: \nF = %.2f N \nr = %.2f m \nAngle = %.2f deg",
                     number,
                     torque.getForce(),
                     torque.getDistance(),
                     torque.getAngle()
         ));
-        text.setDisable(true);
     }
     
 }
