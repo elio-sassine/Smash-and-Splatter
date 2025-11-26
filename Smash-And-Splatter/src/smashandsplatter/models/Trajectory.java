@@ -22,10 +22,11 @@ public class Trajectory {
         Random rand = new Random();
         this.initialVelocity[0] = Math.round(rand.nextDouble(0.1, 40) * 100) / 100.0;
         this.initialVelocity[1] = Math.round(rand.nextDouble(0.1, 40) * 100) / 100.0;
-                
+        
         this.time = Math.round(rand.nextDouble(0.1, 10) * 100) / 100.0;
         
         this.finalVelocity = calculateFinalVelocity();
+        this.yPos = calculateYPos();
         this.distance = calculateDistance();
     }
     

@@ -4,8 +4,11 @@
  */
 package smashandsplatter;
 
+import java.io.IOException;
 import smashandsplatter.models.Torque;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -32,19 +35,18 @@ public class Main extends Application {
     public void start(Stage stage) {
         currStage = stage;
         // temp, for testing
-        Torque tq = new Torque();
-        Label force = new Label("Force: " + tq.getForce());
-        Label distance = new Label("Distance: " + tq.getDistance());
-        Label angle = new Label("Angle (degrees): " + tq.getAngle());
-        Label torque = new Label("Torque: " + tq.getTorque());
-        
-        VBox root = new VBox(force, distance, angle, torque);
-        
-        Scene sc = new Scene(root);
-        currScene = sc;
-        
-        stage.setScene(sc);
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterView.fxml"));
+            Parent root = loader.load();
+
+            Scene sc = new Scene(root);
+            currScene = sc;
+
+            stage.setScene(sc);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static Stage getCurrStage() {

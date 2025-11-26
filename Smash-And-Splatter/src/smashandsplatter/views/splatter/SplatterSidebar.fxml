@@ -10,10 +10,10 @@
       <TextField promptText="X Velocity" fx:id="xVelocity" />
       <TextField fx:id="initialYVelocity" promptText="Initial Y Velocity" />
       <TextField fx:id="finalYVelocity" promptText="Final Y Velocity" />
-      <TextField promptText="x Distance" fx:id="xDistance" />
+      <TextField promptText="xDistance" fx:id="xDistance" />
       <TextField fx:id="yPos" promptText="Height" />
       <TextField fx:id="time" promptText="Time" />
-      <Button fx:id="Submit" mnemonicParsing="false" text="Button" />
+      <Button fx:id="submit" mnemonicParsing="false" text="Submit" />
    </children>
    <padding>
       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
