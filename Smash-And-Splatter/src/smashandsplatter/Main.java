@@ -16,6 +16,9 @@ import javafx.stage.Stage;
  * @author eliob
  */
 public class Main extends Application {
+    
+    private static Stage currStage;
+    private static Scene currScene;
 
     /**
      * @param args the command line arguments
@@ -27,6 +30,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        currStage = stage;
         // temp, for testing
         Torque tq = new Torque();
         Label force = new Label("Force: " + tq.getForce());
@@ -37,8 +41,13 @@ public class Main extends Application {
         VBox root = new VBox(force, distance, angle, torque);
         
         Scene sc = new Scene(root);
+        currScene = sc;
+        
         stage.setScene(sc);
         stage.show();
     }
-    
+
+    public static Stage getCurrStage() {
+        return currStage;
+    }
 }
