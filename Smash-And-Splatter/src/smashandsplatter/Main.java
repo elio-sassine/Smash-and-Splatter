@@ -50,4 +50,14 @@ public class Main extends Application {
     public static Stage getCurrStage() {
         return currStage;
     }
+
+    public static Scene getCurrScene() {
+        return currScene;
+    }
+
+    public static void setCurrScene(Scene currScene) {
+        Main.currScene = currScene;
+    }
+    
+    
 }
