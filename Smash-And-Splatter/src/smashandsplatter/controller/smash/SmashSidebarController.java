@@ -7,6 +7,10 @@ package smashandsplatter.controller.smash;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -37,6 +41,9 @@ public class SmashSidebarController implements Initializable {
     private Torque torque2;
     private double answerTorque;
     
+    private BooleanProperty success = new SimpleBooleanProperty(false);
+    private IntegerProperty triesLeft = new SimpleIntegerProperty(3);
+    
     /**
      * Initializes the controller class.
      */
@@ -50,6 +57,11 @@ public class SmashSidebarController implements Initializable {
             initializeTextField(torque2Text, torque2, 2);
             
             answerTorque = -(torque1.getTorque() + torque2.getTorque());
+            
+            answerTorque = Math.round(answerTorque * 100) / 100.0;
+            
+            // for testing
+            System.out.println(answerTorque);
         });
     }    
     
@@ -68,5 +80,20 @@ public class SmashSidebarController implements Initializable {
                     torque.getAngle()
         ));
     }
-    
+
+    /**
+     * Gets the success property to be able to add listeners
+     * @return BooleanProperty success
+     */
+    public BooleanProperty getSuccess() {
+        return success;
+    }
+
+    /**
+     * Gets the amount of tries left as property to be able to add listeners
+     * @return IntegerProperty triesLeft
+     */
+    public IntegerProperty getTriesLeft() {
+        return triesLeft;
+    }
 }
