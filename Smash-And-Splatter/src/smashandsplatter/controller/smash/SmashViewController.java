@@ -12,6 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,6 +36,9 @@ public class SmashViewController implements Initializable {
     @FXML
     private BorderPane root;
     
+    @FXML
+    private AnchorPane anchorPane;
+    
     /**
      * Initializes the controller class.
      */
@@ -40,9 +47,11 @@ public class SmashViewController implements Initializable {
         torque1 = new Torque();
         torque2 = new Torque();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashSidebar.fxml"));
-        
         try {
             VBox sidebar = loader.load();
+            
+            System.out.println(sidebar);
+            System.out.println(root);
             root.setLeft(sidebar);
             
             cont = loader.getController();
@@ -77,6 +86,20 @@ public class SmashViewController implements Initializable {
             }
             
             // do fail code
+            Image img = new Image("file:src/smashandsplatter/resources/images/LevelFailed.png");
+            ImageView imgView = new ImageView(img);
+            imgView.setFitHeight(500);
+            imgView.setFitWidth(500);
+            
+            System.out.println(img.exceptionProperty().get());
+            imgView.setX(250);
+            imgView.setY(50);
+            
+            System.out.println(imgView);    
+            System.out.println(img.getUrl());
+            anchorPane.getChildren().add(imgView);
+            System.out.println(anchorPane.getChildren());
+            root.setEffect(new GaussianBlur(5));
         });
     }
     
@@ -114,7 +137,5 @@ public class SmashViewController implements Initializable {
      */
     public static Torque getTorque2() {
         return torque2;
-    }
-    
-    
+    }   
 }
