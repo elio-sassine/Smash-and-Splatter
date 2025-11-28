@@ -10,8 +10,12 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import smashandsplatter.Main;
 import smashandsplatter.models.Torque;
 
 /**
@@ -22,6 +26,8 @@ import smashandsplatter.models.Torque;
 public class SmashViewController implements Initializable {
     private static Torque torque1;
     private static Torque torque2;
+    
+    private SmashSidebarController cont;
     
     @FXML
     private BorderPane root;
@@ -39,8 +45,8 @@ public class SmashViewController implements Initializable {
             VBox sidebar = loader.load();
             root.setLeft(sidebar);
             
-            SmashSidebarController cont = loader.getController();
-            initializeHandlers(cont);
+            cont = loader.getController();
+            initializeHandlers();
         } catch(IOException e) {
             System.err.println("Could not read file!");
         } catch (Exception e) {
@@ -48,23 +54,50 @@ public class SmashViewController implements Initializable {
         }
     }    
     
-    private void initializeHandlers(SmashSidebarController cont) {
+    /**
+     * initializes the handlers for the success and tries left properties
+     * @param cont 
+     */
+    private void initializeHandlers() {
         cont.getSuccess().addListener((obs, oldVal, newVal) -> {
             if (!newVal) {
                 // add fail code, usually unreachable
                 return;
             }
             // add animation code on success
+            int triesLeft = cont.getTriesLeft().get();
+            
+            goToNextStage(triesLeft);
         });
         
         cont.getTriesLeft().addListener((obs, oldVal, newVal) -> {
-            if (newVal.intValue() != 0) {
+            if (newVal.intValue() > 0) {
                 // remove a heart
                 return;
             }
             
             // do fail code
         });
+    }
+    
+    private void goToNextStage(int triesLeft) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashView.fxml"));
+            Parent root = loader.load();
+            SmashViewController viewCont = loader.getController();
+            SmashSidebarController sidebarCont = viewCont.cont;
+            
+            sidebarCont.getTriesLeft().set(triesLeft);
+            
+            Scene currScene = new Scene(root);
+            
+            Main.setCurrScene(currScene);
+            Stage curr = Main.getCurrStage();
+            
+            curr.setScene(currScene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -82,4 +115,6 @@ public class SmashViewController implements Initializable {
     public static Torque getTorque2() {
         return torque2;
     }
+    
+    
 }

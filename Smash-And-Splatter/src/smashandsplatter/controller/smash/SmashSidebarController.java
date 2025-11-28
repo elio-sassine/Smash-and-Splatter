@@ -11,6 +11,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -64,6 +65,34 @@ public class SmashSidebarController implements Initializable {
             System.out.println(answerTorque);
         });
     }    
+    
+    /**
+     * Handles the submit
+     * Has a range of answer +/- 0.1 as we approximate and so does the user
+     * @param event 
+     */
+    @FXML
+    void handleSubmit(ActionEvent event) {
+        try {
+            double submittedTorque = Double.parseDouble(answerTorqueText.getText());
+            
+            // It is better to check a range instead of an exact answer as we round 
+            // and we should assume they round too
+            if (
+                    submittedTorque >= (answerTorque - 0.1) && 
+                    submittedTorque <= (answerTorque + 0.1)
+                )
+            {
+                success.set(true);
+                return;
+            } 
+            
+            int tries = triesLeft.get();
+            triesLeft.set(tries - 1);
+        } catch (NumberFormatException e) {
+            submit.setText("Has to be a number without units!");
+        }
+    }
     
     /**
      * Initializes the text fields for the input torques
