@@ -2,6 +2,9 @@ package smashandsplatter.controller.splatter;
 
 import java.util.Random;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -36,6 +39,12 @@ public class SplatterSidebarController {
     private Trajectory trajectory;
     private int[] shownFields;
     
+    private BooleanProperty success;
+    private IntegerProperty triesLeft;
+    
+    /**
+     * Initializes the controller
+     */
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
@@ -97,5 +106,49 @@ public class SplatterSidebarController {
         input.setDisable(true);
         String display = String.format("%s: %.02f %s", input.getPromptText(), value, unit);
         input.setText(display);
+    }
+    
+    /**
+     * Handles the submit
+     * Has a range of answer +/- 0.1 as we approximate and so does the user
+     * @param event The event that caused the submit
+     */
+    @FXML
+    void handleSubmit(ActionEvent event) {
+        // We basically have no choice but to do a bunch of if statements if we want to highlight bad answers
+        // Unless JavaFx has validators (I don't think it does but I don't care enough to check, this is easier)
+        // I will for sure make a great software engineer trust me fo sho
+        
+        // need this to go through all the if statements and still know if we got the right answer or not
+        boolean isRight = true;
+        
+        double xDistanceAnswer = Double.parseDouble(xDistance.getText());
+        double xVelocityAnswer = Double.parseDouble(xVelocity.getText());
+        double yPosAnswer = Double.parseDouble(yPos.getText());
+        double initialYVelocityAnswer = Double.parseDouble(initialYVelocity.getText());
+        double finalYVelocityAnswer = Double.parseDouble(finalYVelocity.getText());
+        double timeAnswer = Double.parseDouble(time.getText());
+        
+        if (!(trajectory.getDistance() + 0.1 >= xDistanceAnswer && trajectory.getDistance() - 0.1 <= xDistanceAnswer)) {
+            isRight = false;
+            
+        }
+        // basically just copy paste this 5 times lol
+    }
+    
+    /**
+     * Gets the success property to be able to add listeners
+     * @return BooleanProperty success
+     */
+    public BooleanProperty getSuccess() {
+        return success;
+    }
+
+    /**
+     * Gets the amount of tries left as property to be able to add listeners
+     * @return IntegerProperty triesLeft
+     */
+    public IntegerProperty getTriesLeft() {
+        return triesLeft;
     }
 }
