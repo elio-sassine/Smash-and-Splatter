@@ -43,7 +43,7 @@ public class SmashSidebarController implements Initializable {
     private double answerTorque;
     
     private BooleanProperty success = new SimpleBooleanProperty(false);
-    private IntegerProperty triesLeft = new SimpleIntegerProperty(3);
+    private IntegerProperty triesLeft = new SimpleIntegerProperty(5);
     
     /**
      * Initializes the controller class.

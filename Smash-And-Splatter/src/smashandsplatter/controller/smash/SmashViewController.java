@@ -7,6 +7,7 @@ package smashandsplatter.controller.smash;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import smashandsplatter.Main;
 import smashandsplatter.models.Torque;
 
@@ -74,9 +76,26 @@ public class SmashViewController implements Initializable {
                 return;
             }
             // add animation code on success
-            int triesLeft = cont.getTriesLeft().get();
+            Image img = new Image("file:src/smashandsplatter/resources/images/LevelPassed.png");
+            ImageView imgView = new ImageView(img);
+            imgView.setFitHeight(500);
+            imgView.setFitWidth(500);
             
-            goToNextStage(triesLeft);
+            imgView.setX(250);
+            imgView.setY(50);
+            
+            anchorPane.getChildren().add(imgView);
+            root.setEffect(new GaussianBlur(5));
+            
+            PauseTransition pt = new PauseTransition(Duration.seconds(3));
+            pt.play();
+            pt.setOnFinished(e -> {
+                int triesLeft = cont.getTriesLeft().get();
+            
+                goToNextStage(triesLeft);
+            });
+                    
+            
         });
         
         cont.getTriesLeft().addListener((obs, oldVal, newVal) -> {
@@ -91,14 +110,10 @@ public class SmashViewController implements Initializable {
             imgView.setFitHeight(500);
             imgView.setFitWidth(500);
             
-            System.out.println(img.exceptionProperty().get());
             imgView.setX(250);
             imgView.setY(50);
             
-            System.out.println(imgView);    
-            System.out.println(img.getUrl());
             anchorPane.getChildren().add(imgView);
-            System.out.println(anchorPane.getChildren());
             root.setEffect(new GaussianBlur(5));
         });
     }
