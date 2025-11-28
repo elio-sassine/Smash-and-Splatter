@@ -134,6 +134,11 @@ public class SplatterSidebarController {
             
         }
         // basically just copy paste this 5 times lol
+        
+        if (!isRight) {
+            int tries = triesLeft.get();
+            triesLeft.set(tries - 1);
+        }
     }
     
     /**
