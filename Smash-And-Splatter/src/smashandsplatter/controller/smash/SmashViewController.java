@@ -6,13 +6,16 @@ package smashandsplatter.controller.smash;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +37,7 @@ public class SmashViewController implements Initializable {
     private static Torque torque2;
     
     private SmashSidebarController cont;
+    private VBox heartBox;
     
     @FXML
     private BorderPane root;
@@ -51,13 +55,26 @@ public class SmashViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashSidebar.fxml"));
         try {
             VBox sidebar = loader.load();
-            
-            System.out.println(sidebar);
-            System.out.println(root);
+
             root.setLeft(sidebar);
             
             cont = loader.getController();
             initializeHandlers();
+            
+            heartBox = new VBox();
+            heartBox.setSpacing(12);
+            heartBox.setPadding(new Insets(60, 30, 30, 30));
+            heartBox.setPrefHeight(heartBox.getHeight());
+            heartBox.setPrefWidth(heartBox.getWidth());
+            for (int i = 0; i < 5; i++) {
+                ImageView heart = new ImageView(new Image("file:src/smashandsplatter/resources/images/Heart.png"));
+                heart.setFitHeight(30);
+                heart.setFitWidth(30);
+                
+                heartBox.getChildren().add(heart);
+            }
+            
+            root.setRight(heartBox);
         } catch(IOException e) {
             System.err.println("Could not read file!");
         } catch (Exception e) {
@@ -101,6 +118,7 @@ public class SmashViewController implements Initializable {
         cont.getTriesLeft().addListener((obs, oldVal, newVal) -> {
             if (newVal.intValue() > 0) {
                 // remove a heart
+                updateHearts(newVal.intValue());
                 return;
             }
             
@@ -126,6 +144,7 @@ public class SmashViewController implements Initializable {
             SmashSidebarController sidebarCont = viewCont.cont;
             
             sidebarCont.getTriesLeft().set(triesLeft);
+            viewCont.updateHearts(triesLeft);
             
             Scene currScene = new Scene(root);
             
@@ -135,6 +154,20 @@ public class SmashViewController implements Initializable {
             curr.setScene(currScene);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Updates the hearts when the user fails a task
+     * @param triesLeft the tries the user has left (aka the amount of hearts left)
+     */
+    private void updateHearts(int triesLeft) {
+        for (int i = 0; i < 5 - triesLeft; i++) {
+            List hearts = heartBox.getChildren();
+            Object obj = hearts.get(i);
+            if (obj instanceof ImageView heart) {
+                heart.setImage(new Image("file:src/smashandsplatter/resources/images/DeadHeart.png"));
+            }
         }
     }
 
