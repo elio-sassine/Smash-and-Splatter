@@ -4,10 +4,14 @@
  */
 package smashandsplatter;
 
+import java.io.IOException;
 import smashandsplatter.models.Torque;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,6 +20,9 @@ import javafx.stage.Stage;
  * @author eliob
  */
 public class Main extends Application {
+    
+    private static Stage currStage;
+    private static Scene currScene;
 
     /**
      * @param args the command line arguments
@@ -27,18 +34,32 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        currStage = stage;
         // temp, for testing
-        Torque tq = new Torque();
-        Label force = new Label("Force: " + tq.getForce());
-        Label distance = new Label("Distance: " + tq.getDistance());
-        Label angle = new Label("Angle (degrees): " + tq.getAngle());
-        Label torque = new Label("Torque: " + tq.getTorque());
-        
-        VBox root = new VBox(force, distance, angle, torque);
-        
-        Scene sc = new Scene(root);
-        stage.setScene(sc);
-        stage.show();
+        try {
+            Parent root = new Pane();
+
+            Scene sc = new Scene(root);
+            currScene = sc;
+
+            stage.setScene(sc);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public static Stage getCurrStage() {
+        return currStage;
+    }
+
+    public static Scene getCurrScene() {
+        return currScene;
+    }
+
+    public static void setCurrScene(Scene currScene) {
+        Main.currScene = currScene;
+    }
+    
     
 }
