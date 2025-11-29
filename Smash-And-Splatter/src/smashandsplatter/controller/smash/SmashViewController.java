@@ -168,7 +168,7 @@ public class SmashViewController implements Initializable {
             Object obj = hearts.get(i);
             if (obj instanceof ImageView heart) {
                 heart.setImage(new Image("file:src/smashandsplatter/resources/images/DeadHeart.png"));
-            }
+            }   
         }
     }
 
