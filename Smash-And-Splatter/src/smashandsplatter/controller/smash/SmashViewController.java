@@ -121,6 +121,7 @@ public class SmashViewController implements Initializable {
                 updateHearts(newVal.intValue());
                 return;
             }
+            updateHearts(newVal.intValue());
             
             // do fail code
             Image img = new Image("file:src/smashandsplatter/resources/images/LevelFailed.png");
