@@ -1,0 +1,13 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Nov 28, 2025, 9:17:56 PM
+    Author     : eliob
+*/
+
+.wrongButton {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+}

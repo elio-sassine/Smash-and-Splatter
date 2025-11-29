@@ -37,7 +37,7 @@ public class Main extends Application {
         currStage = stage;
         // temp, for testing
         try {
-            Parent root = new Pane();
+            Parent root = FXMLLoader.load(getClass().getResource("/smashandsplatter/views/splatter/SplatterView.fxml"));
 
             Scene sc = new Scene(root);
             currScene = sc;

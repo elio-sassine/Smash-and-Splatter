@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="8.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterSidebarController">
+<VBox fx:id="root" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="8.0" stylesheets="@splatterCSS.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterSidebarController">
    <children>
       <TextField promptText="X Velocity" fx:id="xVelocity" />
       <TextField fx:id="initialYVelocity" promptText="Initial Y Velocity" />
@@ -13,7 +13,7 @@
       <TextField promptText="xDistance" fx:id="xDistance" />
       <TextField fx:id="yPos" promptText="Height" />
       <TextField fx:id="time" promptText="Time" />
-      <Button fx:id="submit" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="submit" mnemonicParsing="false" onAction="#handleSubmit" stylesheets="@splatterCSS.css" text="Submit" />
    </children>
    <padding>
       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

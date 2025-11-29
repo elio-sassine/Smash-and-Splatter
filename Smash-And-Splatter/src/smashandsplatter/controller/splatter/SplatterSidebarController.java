@@ -1,13 +1,18 @@
 package smashandsplatter.controller.splatter;
 
+import java.util.ArrayList;
 import java.util.Random;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import smashandsplatter.models.Trajectory;
 
 /**
@@ -36,11 +41,15 @@ public class SplatterSidebarController {
     @FXML
     private TextField yPos;
     
-    private Trajectory trajectory;
-    private int[] shownFields;
+    @FXML
+    private VBox root;
     
-    private BooleanProperty success;
-    private IntegerProperty triesLeft;
+    private Trajectory trajectory;
+    private ArrayList<Integer> shownFields;
+    private ArrayList<TextField> lockedFields;
+    
+    private BooleanProperty success = new SimpleBooleanProperty(false);
+    private IntegerProperty triesLeft = new SimpleIntegerProperty(5);
     
     /**
      * Initializes the controller
@@ -49,7 +58,8 @@ public class SplatterSidebarController {
     public void initialize() {
         Platform.runLater(() -> {
             trajectory = SplatterViewController.getTrajectory();
-            shownFields = new int[3];
+            shownFields = new ArrayList<>();
+            lockedFields = new ArrayList<>();
         
             initializeFields(); 
         });
@@ -60,36 +70,46 @@ public class SplatterSidebarController {
      */
     private void initializeFields() {
         Random rand = new Random();
-
         
         for (int i = 0; i < 3; i++) {
-            shownFields[i] = rand.nextInt(6);
+            int nextInt = rand.nextInt(6);
+            while (shownFields.contains(nextInt)) {
+                nextInt = rand.nextInt();
+            }
+            
+            shownFields.add(nextInt);
         }
         
-        for (int i = 0; i < 3; i++) {
-            switch (shownFields[i]) {
+        for (int field : shownFields) {
+            switch (field) {
                 case 0 -> {
                     double value = (trajectory.getInitialVelocity())[0];
+                    lockedFields.add(xVelocity);
                     displayValue(xVelocity, value, "m/s");
                 }
                 case 1 -> {
                     double value = (trajectory.getInitialVelocity())[1];
+                    lockedFields.add(initialYVelocity);
                     displayValue(initialYVelocity, value, "m/s");
                 }
                 case 2 -> {
                     double value = (trajectory.getFinalVelocity())[1];
+                    lockedFields.add(finalYVelocity);
                     displayValue(finalYVelocity, value, "m/s");
                 }
                 case 3 -> {
                     double value = trajectory.getDistance();
+                    lockedFields.add(xDistance);
                     displayValue(xDistance, value, "m");
                 }
                 case 4 -> {
                     double value = trajectory.getyPos();
+                    lockedFields.add(yPos);
                     displayValue(yPos, value, "m");
                 }
                 case 5 -> {
                     double value = trajectory.getTime();
+                    lockedFields.add(time);
                     displayValue(time, value, "s");
                 }
             };
@@ -119,26 +139,57 @@ public class SplatterSidebarController {
         // Unless JavaFx has validators (I don't think it does but I don't care enough to check, this is easier)
         // I will for sure make a great software engineer trust me fo sho
         
+        // reset the reds
+        for (Node child : root.getChildren()) {
+            child.getStyleClass().removeAll("wrongButton");
+        }
+        
         // need this to go through all the if statements and still know if we got the right answer or not
         boolean isRight = true;
         
-        double xDistanceAnswer = Double.parseDouble(xDistance.getText());
-        double xVelocityAnswer = Double.parseDouble(xVelocity.getText());
-        double yPosAnswer = Double.parseDouble(yPos.getText());
-        double initialYVelocityAnswer = Double.parseDouble(initialYVelocity.getText());
-        double finalYVelocityAnswer = Double.parseDouble(finalYVelocity.getText());
-        double timeAnswer = Double.parseDouble(time.getText());
+        // divergent spaghetti
+        System.out.println(lockedFields);
+        double xDistanceAnswer = lockedFields.contains(xDistance) ? trajectory.getDistance() : Double.parseDouble(xDistance.getText());
+        double xVelocityAnswer = lockedFields.contains(xVelocity) ? trajectory.getInitialVelocity()[0] : Double.parseDouble(xVelocity.getText());
+        double yPosAnswer = lockedFields.contains(yPos) ? trajectory.getyPos() : Double.parseDouble(yPos.getText());
+        double initialYVelocityAnswer = lockedFields.contains(initialYVelocity) ? trajectory.getInitialVelocity()[1] : Double.parseDouble(initialYVelocity.getText());
+        double finalYVelocityAnswer = lockedFields.contains(finalYVelocity) ? trajectory.getFinalVelocity()[1] : Double.parseDouble(finalYVelocity.getText());
+        double timeAnswer = lockedFields.contains(time) ? trajectory.getTime() : Double.parseDouble(time.getText());
         
+        // convergent spaghetti
         if (!(trajectory.getDistance() + 0.1 >= xDistanceAnswer && trajectory.getDistance() - 0.1 <= xDistanceAnswer)) {
             isRight = false;
-            
+            xDistance.getStyleClass().add("wrongButton");
         }
-        // basically just copy paste this 5 times lol
+        if (!(trajectory.getInitialVelocity()[0] + 0.1 > xVelocityAnswer && trajectory.getInitialVelocity()[0] - 0.1 <= xVelocityAnswer)) {
+            isRight = false;
+            xVelocity.getStyleClass().add("wrongButton");
+        }
+        if (!(trajectory.getTime()+ 0.1 >= timeAnswer && trajectory.getTime()- 0.1 <= timeAnswer)) {
+            isRight = false;
+            time.getStyleClass().add("wrongButton");
+        }
+        if (!(trajectory.getyPos()+ 0.1 >= yPosAnswer && trajectory.getyPos()- 0.1 <= yPosAnswer)) {
+            isRight = false;
+            yPos.getStyleClass().add("wrongButton");
+        }
+        if (!(trajectory.getInitialVelocity()[1] + 0.1 >= initialYVelocityAnswer && trajectory.getInitialVelocity()[1] - 0.1 <= initialYVelocityAnswer)) {
+            isRight = false;
+            initialYVelocity.getStyleClass().add("wrongButton");
+        }
+        if (!(trajectory.getFinalVelocity()[1] + 0.1 >= finalYVelocityAnswer && trajectory.getFinalVelocity()[1] - 0.1 <= finalYVelocityAnswer)) {
+            isRight = false;
+            finalYVelocity.getStyleClass().add("wrongButton");
+        }
+
         
         if (!isRight) {
             int tries = triesLeft.get();
             triesLeft.set(tries - 1);
+            return;
         }
+        
+        success.set(true);
     }
     
     /**
