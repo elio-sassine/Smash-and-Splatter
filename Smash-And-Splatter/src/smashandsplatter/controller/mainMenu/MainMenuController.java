@@ -45,24 +45,18 @@ public class MainMenuController implements Initializable {
         ImageView smashImgView = new ImageView(smashImg);
         smashImgView.setFitHeight(70.4);
         smashImgView.setFitWidth(230.4);
-        smashImgView.setMouseTransparent(true);
-        smashImgView.setPickOnBounds(false);
         
         smashBtn.setGraphic(smashImgView);
         smashBtn.setBackground(Background.EMPTY);
-        smashBtn.setPickOnBounds(true);
         
         Image splatterImg = new Image(getClass().getResource("/smashandsplatter/resources/images/SplatterButton.png")
                             .toExternalForm());
         ImageView splatterImgView = new ImageView(splatterImg);
         splatterImgView.setFitHeight(70.4);
         splatterImgView.setFitWidth(230.4);
-        splatterImgView.setMouseTransparent(true);
-        splatterImgView.setPickOnBounds(false);
         
         splatterBtn.setGraphic(splatterImgView);
         splatterBtn.setBackground(Background.EMPTY);
-        splatterBtn.setPickOnBounds(true);
     }    
 
     //Handles actions when smash button is pressed
