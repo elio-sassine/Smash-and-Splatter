@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -36,18 +37,16 @@ public class Main extends Application {
         currStage = stage;
         // temp, for testing
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashView.fxml"));
-
-            System.out.println(getClass().getResource("/smashandsplatter/views/smash/SmashView.fxml"));
-            Parent root = loader.load();
+            Parent root = new Pane();
 
             Scene sc = new Scene(root);
             currScene = sc;
+
             stage.setScene(sc);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        }   
+        }
     }
 
     public static Stage getCurrStage() {
