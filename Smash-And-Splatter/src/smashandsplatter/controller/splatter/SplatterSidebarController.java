@@ -62,6 +62,9 @@ public class SplatterSidebarController {
             lockedFields = new ArrayList<>();
         
             initializeFields(); 
+            
+            // for testing
+            System.out.println(trajectory);
         });
     }
     
@@ -74,7 +77,7 @@ public class SplatterSidebarController {
         for (int i = 0; i < 3; i++) {
             int nextInt = rand.nextInt(6);
             while (shownFields.contains(nextInt)) {
-                nextInt = rand.nextInt();
+                nextInt = rand.nextInt(6);
             }
             
             shownFields.add(nextInt);

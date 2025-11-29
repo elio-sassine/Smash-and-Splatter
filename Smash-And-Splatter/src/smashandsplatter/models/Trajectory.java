@@ -4,6 +4,7 @@
  */
 package smashandsplatter.models;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -23,14 +24,14 @@ public class Trajectory {
      */
     public Trajectory() {
         Random rand = new Random();
-        this.initialVelocity[0] = Math.round(rand.nextDouble(0.1, 40) * 100) / 100.0;
-        this.initialVelocity[1] = Math.round(rand.nextDouble(0.1, 40) * 100) / 100.0;
+        this.yPos = Math.round(rand.nextDouble(10, 50) * 100) / 100.0;
+        this.distance = Math.round(rand.nextDouble(10, 50) * 100) / 100.0;
         
-        this.time = Math.round(rand.nextDouble(0.1, 10) * 100) / 100.0;
+        this.initialVelocity[1] = Math.round(rand.nextDouble(10, 50) * 100) / 100.0;
         
+        this.time = computeTime();
+        this.initialVelocity[0] = computeInitialHorizontalVelocity();
         this.finalVelocity = calculateFinalVelocity();
-        this.yPos = calculateYPos();
-        this.distance = calculateDistance();
     }
 
     public Trajectory(double yPos, double distance, double time, double[] initialVelocity, double[] finalVelocity) {
@@ -41,22 +42,47 @@ public class Trajectory {
         this.finalVelocity = finalVelocity;
     }
     
-    
-    
     private double[] calculateFinalVelocity() {
         double[] finalVelocity = new double[2];
         finalVelocity[0] = this.initialVelocity[0];
-        finalVelocity[1] = this.initialVelocity[1] + this.GRAVITY * this.time;
+        finalVelocity[1] = computeFinalYVelocity();
         
         return finalVelocity;
     };
     
-    private double calculateYPos() {
-        return 0.5 * (initialVelocity[1] + finalVelocity[1]) * time; 
+    /**
+     * computes the time of flight given initial y velocity, gravity and height
+     * @return time of flight
+     */
+    private double computeTime() {
+        double inside = initialVelocity[1] * initialVelocity[1] - 2 * GRAVITY * yPos;
+        double t = (-initialVelocity[1] - Math.sqrt(inside)) / GRAVITY;
+        return round2(t);
+    }
+
+    /**
+     * computes the initial x velocity given distance and time
+     * @return initial (and final) x velocity
+     */
+    private double computeInitialHorizontalVelocity() {
+        return round2(distance / time);
+    }
+
+    /**
+     * Compute the final velocity given the gravity and time
+     * @return final y velocity
+     */
+    private double computeFinalYVelocity() {
+        return round2(initialVelocity[1] - GRAVITY * time);
     }
     
-    private double calculateDistance() {
-        return initialVelocity[0] * time;
+    /**
+     * rounds an input to 2 digits
+     * @param v the input to round to 2 digits
+     * @return v rounded to 2 digits
+     */
+    public static double round2(double v) {
+        return Math.round(v * 100.0) / 100.0;
     }
 
     /**
@@ -105,6 +131,6 @@ public class Trajectory {
      */
     @Override
     public String toString() {
-        return "Trajectory{" + "initialVelocity=" + initialVelocity + ", finalVelocity=" + finalVelocity + ", yPos=" + yPos + ", distance=" + distance + ", time=" + time + '}';
+        return "Trajectory{" + "initialVelocity=" + Arrays.toString(initialVelocity) + ", finalVelocity=" + Arrays.toString(finalVelocity) + ", yPos=" + yPos + ", distance=" + distance + ", time=" + time + '}';
     }
 }
