@@ -40,6 +40,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/mainMenu/MainMenu.fxml"));
             Parent root = loader.load();
 
+
             Scene sc = new Scene(root);
             currScene = sc;
 

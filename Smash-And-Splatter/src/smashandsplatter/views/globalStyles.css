@@ -7,6 +7,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : eliob
 */
 
-.text {
+.text, .text-field {
     -fx-font-family: "Awasete Powder";
+}
+
+.text-field {
+    -fx-backgroud-color: #FFFFFF;
+    -fx-border-radius: 1px;
+    -fx-border-color: gray;
+}
+
+.text-field:focused {
+    -fx-border-color: ghostwhite;
 }
