@@ -14,9 +14,9 @@ import java.util.Random;
 public class Trajectory {
     private double[] initialVelocity = new double[2];
     private double[] finalVelocity = new double[2];
-    private double yPos;
-    private double distance;
-    private double time;
+    private final double yPos;
+    private final double distance;
+    private final double time;
     private static final double GRAVITY = -9.8;
     
     /**
@@ -73,7 +73,7 @@ public class Trajectory {
      * @return final y velocity
      */
     private double computeFinalYVelocity() {
-        return round2(initialVelocity[1] - GRAVITY * time);
+        return round2(initialVelocity[1] + GRAVITY * time);
     }
     
     /**

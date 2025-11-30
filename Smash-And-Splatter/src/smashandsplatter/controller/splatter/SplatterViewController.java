@@ -33,6 +33,7 @@ import smashandsplatter.models.Trajectory;
  */
 public class SplatterViewController implements Initializable {
     private static Trajectory trajectory;
+    private static int levelsPassed;
     
     @FXML
     private BorderPane root;
@@ -101,7 +102,7 @@ public class SplatterViewController implements Initializable {
             pt.play();
             pt.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
-            
+                levelsPassed++;
                 goToNextStage(triesLeft);
             });
                     
@@ -124,6 +125,8 @@ public class SplatterViewController implements Initializable {
             
             imgView.setX(250);
             imgView.setY(50);
+            
+            System.out.println(levelsPassed);
             
             anchorPane.getChildren().add(imgView);
             root.setEffect(new GaussianBlur(5));   
