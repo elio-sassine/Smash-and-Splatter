@@ -19,12 +19,20 @@ public class Trajectory {
     private final double time;
     private static final double GRAVITY = -9.8;
     
+    // needed for animation
+    private double peakX;
+    private double peakY;
+    private double controlX;
+    private double controlY;
+    
+    
+    
     /**
      * Makes a trajectory model with randomized fields
      */
     public Trajectory() {
         Random rand = new Random();
-        this.yPos = Math.round(rand.nextDouble(10, 50) * 100) / 100.0;
+        this.yPos = Math.round(rand.nextDouble(0, 50) * 100) / 100.0;
         this.distance = Math.round(rand.nextDouble(10, 50) * 100) / 100.0;
         
         this.initialVelocity[1] = Math.round(rand.nextDouble(10, 50) * 100) / 100.0;
@@ -32,6 +40,9 @@ public class Trajectory {
         this.time = computeTime();
         this.initialVelocity[0] = computeInitialHorizontalVelocity();
         this.finalVelocity = calculateFinalVelocity();
+        
+        computePeaks();
+        computeBezierControlPoint();
     }
 
     public Trajectory(double yPos, double distance, double time, double[] initialVelocity, double[] finalVelocity) {
@@ -75,6 +86,34 @@ public class Trajectory {
     private double computeFinalYVelocity() {
         return round2(initialVelocity[1] + GRAVITY * time);
     }
+    
+    /**
+     * Computes the peakX and peakY variables then modifies them
+     */
+    private void computePeaks() {
+        double tPeak = round2(-initialVelocity[1] / GRAVITY);
+        
+        peakX = initialVelocity[0] * tPeak;
+        peakY = yPos + initialVelocity[1] * tPeak + 0.5 * GRAVITY * tPeak * tPeak;
+    }
+    
+    /**
+    * Computes the quadratic Bezier control point (controlX, controlY)
+    * so that the QuadCurveTo matches the true physics parabola exactly.
+    */
+   public void computeBezierControlPoint() {
+       double Sx = 0;
+       double Sy = yPos;
+
+       double Ex = distance;
+       double Ey = yPos;
+
+       double Vx = peakX;
+       double Vy = peakY;
+
+       controlX = 2 * Vx - (Sx + Ex) / 2.0;
+       controlY = 2 * Vy - (Sy + Ey) / 2.0;
+   }
     
     /**
      * rounds an input to 2 digits
@@ -126,11 +165,34 @@ public class Trajectory {
     }
 
     /**
+     * Gets the x coordinate at which the trajectory is at its peak
+     * @return x peak
+     */
+    public double getPeakX() {
+        return peakX;
+    }
+
+    /**
+     * Gets the y coordinate at which the trajectory is at its peak
+     * @return y peak
+     */
+    public double getPeakY() {
+        return peakY;
+    }
+    
+    public double getControlX() { 
+        return controlX; 
+    }
+    public double getControlY() { 
+        return controlY; 
+    }
+
+    /**
      * makes a string of the trajectory class
      * @return a string representation of the class
      */
     @Override
     public String toString() {
-        return "Trajectory{" + "initialVelocity=" + Arrays.toString(initialVelocity) + ", finalVelocity=" + Arrays.toString(finalVelocity) + ", yPos=" + yPos + ", distance=" + distance + ", time=" + time + '}';
+        return "Trajectory{" + "initialVelocity=" + Arrays.toString(initialVelocity) + ", finalVelocity=" + Arrays.toString(finalVelocity) + ", yPos=" + yPos + ", distance=" + distance + ", time=" + time + ", peakX=" + peakX + ", peakY=" + peakY + '}';
     }
 }
