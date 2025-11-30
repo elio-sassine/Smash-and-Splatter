@@ -18,5 +18,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .text-field:focused {
-    -fx-border-color: ghostwhite;
+    -fx-border-color: darkblue;
 }
