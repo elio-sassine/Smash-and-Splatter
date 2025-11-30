@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
@@ -47,6 +48,10 @@ public class SmashViewController implements Initializable {
     
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Rectangle sky;
+    @FXML
+    private Rectangle grass;
     
     /**
      * Initializes the controller class.
@@ -55,6 +60,8 @@ public class SmashViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         torque1 = new Torque();
         torque2 = new Torque();
+        sky.setViewOrder(1000);
+        grass.setViewOrder(999);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashSidebar.fxml"));
         try {
             VBox sidebar = loader.load();
