@@ -148,8 +148,14 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
-            anchorPane.getChildren().add(imgView);
-            root.setEffect(new GaussianBlur(5));
+            PauseTransition delayBeforeLevelFail = new PauseTransition(Duration.seconds(1));
+            delayBeforeLevelFail.setOnFinished(e -> {
+                anchorPane.getChildren().add(imgView);
+                root.setEffect(new GaussianBlur(5));
+            });
+            
+            Animation failAnim = centerCont.getFailAnimation();
+            new SequentialTransition(failAnim, delayBeforeLevelFail).play();
         });
     }
     

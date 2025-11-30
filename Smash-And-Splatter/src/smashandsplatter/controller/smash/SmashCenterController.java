@@ -47,6 +47,7 @@ public class SmashCenterController {
     private ImageView logMoving;
     
     private Animation successAnimation;
+    private Animation failAnimation;
 
     /**
      * Initializes the controller class.
@@ -54,6 +55,7 @@ public class SmashCenterController {
     @FXML
     public void initialize() {
         successAnimation = new ParallelTransition(personBuffAnimation(), rockFallingSuccess());
+        failAnimation = new ParallelTransition(rockFallingFail(), manGettingCrushed());
     }    
     
     /**
@@ -105,12 +107,62 @@ public class SmashCenterController {
         
         return new SequentialTransition(timeline, pathTransition);
     }
+    
+    private Animation manGettingCrushed() {
+        String pathToFormat = "file:src/smashandsplatter/resources/images/BoulderCrushDrawings/Humandown.png";
+        KeyFrame[] keyFrames = new KeyFrame[2];
+        
+        keyFrames[0] = new KeyFrame(Duration.ZERO, 
+                new KeyValue(person.imageProperty(), new Image("file:src/smashandsplatter/resources/images/AnimationMuscleHuman/HumanBuff1.png"))
+        );
+        
+        keyFrames[1] = new KeyFrame(Duration.seconds(1.85), 
+                new KeyValue(person.imageProperty(), new Image(pathToFormat))
+        );
+        
+        person.toBack();
+        
+        return new Timeline(keyFrames);
+    }
 
+    public Animation rockFallingFail() {
+        double timeToFall = 1.0;
+        
+        Rotate rot = new Rotate(0, 20, 50);
+        logMoving.getTransforms().add(rot);
+        
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, 
+                        new KeyValue(rot.angleProperty(), 0)
+                ),
+                new KeyFrame(Duration.seconds(1.0), new KeyValue(rot.angleProperty(), -90))
+        );
+        
+        Path path = new Path(
+                new MoveTo(80, 90),
+                new LineTo(-20, 120),
+                new LineTo(-20, 420)
+        );
+        
+        PathTransition pathTransition = new PathTransition(Duration.seconds(timeToFall), path, boulder);
+        pathTransition.setInterpolator(Interpolator.EASE_BOTH);
+        
+        return new SequentialTransition(timeline, pathTransition);
+    }
+    
     /**
      * Gets the animation when the user succeeds at the task
      * @return the animation
      */
     public Animation getSuccessAnimation() {
         return successAnimation;
+    }
+
+    /**
+     * Gets the animation that plays when the user fails the task
+     * @return fail animation
+     */
+    public Animation getFailAnimation() {
+        return failAnimation;
     }
 }
