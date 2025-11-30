@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import smashandsplatter.models.Torque;
 
 /**
@@ -37,6 +38,9 @@ public class SmashSidebarController implements Initializable {
 
     @FXML
     private Label torque2Text;
+    
+    @FXML
+    private Label errorLbl;
 
     private Torque torque1;
     private Torque torque2;
@@ -75,6 +79,7 @@ public class SmashSidebarController implements Initializable {
     void handleSubmit(ActionEvent event) {
         try {
             double submittedTorque = Double.parseDouble(answerTorqueText.getText());
+            errorLbl.setText("");
             
             // It is better to check a range instead of an exact answer as we round 
             // and we should assume they round too
@@ -90,7 +95,8 @@ public class SmashSidebarController implements Initializable {
             int tries = triesLeft.get();
             triesLeft.set(tries - 1);
         } catch (NumberFormatException e) {
-            submit.setText("Has to be a number without units!");
+            errorLbl.setText("Has to be a number without units!");
+            errorLbl.setTextFill(Color.DARKRED);
         }
     }
     

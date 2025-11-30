@@ -23,6 +23,7 @@
       </HBox>
       <TextField fx:id="answerTorqueText" alignment="CENTER" />
       <Button fx:id="submit" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
+      <Label fx:id="errorLbl" />
    </children>
    <padding>
       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
