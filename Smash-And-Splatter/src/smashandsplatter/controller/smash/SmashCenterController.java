@@ -13,6 +13,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -97,11 +98,17 @@ public class SmashCenterController {
                 new LineTo(-20, 410),
                 new LineTo(-20, 390)
         );
+        RotateTransition rotate = new RotateTransition(Duration.seconds(1), boulder);
         
+        // goofy ahh
+        rotate.setToAngle(10000000);
+       
         PathTransition pathTransition = new PathTransition(Duration.seconds(timeToFall), path, boulder);
         pathTransition.setInterpolator(Interpolator.EASE_BOTH);
         
-        return new SequentialTransition(timeline, pathTransition);
+        ParallelTransition pt = new ParallelTransition(pathTransition, rotate);
+        
+        return new SequentialTransition(timeline, pt);
     }
     
     /**
@@ -141,7 +148,9 @@ public class SmashCenterController {
                 new KeyFrame(Duration.ZERO, 
                         new KeyValue(rot.angleProperty(), 0)
                 ),
-                new KeyFrame(Duration.seconds(1.0), new KeyValue(rot.angleProperty(), -90))
+                new KeyFrame(Duration.seconds(1.0), 
+                        new KeyValue(rot.angleProperty(), -90)
+                )
         );
         
         Path path = new Path(
@@ -150,10 +159,17 @@ public class SmashCenterController {
                 new LineTo(-20, 420)
         );
         
+        RotateTransition rotate = new RotateTransition(Duration.seconds(1), boulder);
+        
+        // goofy ahh
+        rotate.setToAngle(10000000);
+       
         PathTransition pathTransition = new PathTransition(Duration.seconds(timeToFall), path, boulder);
         pathTransition.setInterpolator(Interpolator.EASE_BOTH);
         
-        return new SequentialTransition(timeline, pathTransition);
+        ParallelTransition pt = new ParallelTransition(pathTransition, rotate);
+        
+        return new SequentialTransition(timeline, pt);
     }
     
     /**

@@ -60,8 +60,10 @@ public class SmashViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         torque1 = new Torque();
         torque2 = new Torque();
+        // makes sure they are behind everything
         sky.setViewOrder(1000);
         grass.setViewOrder(999);
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashSidebar.fxml"));
         try {
             VBox sidebar = loader.load();
