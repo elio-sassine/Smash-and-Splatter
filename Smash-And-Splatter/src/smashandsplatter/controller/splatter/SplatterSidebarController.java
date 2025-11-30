@@ -11,8 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import smashandsplatter.models.Trajectory;
 
 /**
@@ -43,6 +45,9 @@ public class SplatterSidebarController {
     
     @FXML
     private VBox root;
+    
+    @FXML
+    private Label errorLbl;
     
     private Trajectory trajectory;
     private ArrayList<Integer> shownFields;
@@ -151,47 +156,53 @@ public class SplatterSidebarController {
         boolean isRight = true;
         
         // divergent spaghetti
-        double xDistanceAnswer = lockedFields.contains(xDistance) ? trajectory.getDistance() : Double.parseDouble(xDistance.getText());
-        double xVelocityAnswer = lockedFields.contains(xVelocity) ? trajectory.getInitialVelocity()[0] : Double.parseDouble(xVelocity.getText());
-        double yPosAnswer = lockedFields.contains(yPos) ? trajectory.getyPos() : Double.parseDouble(yPos.getText());
-        double initialYVelocityAnswer = lockedFields.contains(initialYVelocity) ? trajectory.getInitialVelocity()[1] : Double.parseDouble(initialYVelocity.getText());
-        double finalYVelocityAnswer = lockedFields.contains(finalYVelocity) ? trajectory.getFinalVelocity()[1] : Double.parseDouble(finalYVelocity.getText());
-        double timeAnswer = lockedFields.contains(time) ? trajectory.getTime() : Double.parseDouble(time.getText());
-        
-        // convergent spaghetti
-        if (!(trajectory.getDistance() + 0.1 >= xDistanceAnswer && trajectory.getDistance() - 0.1 <= xDistanceAnswer)) {
-            isRight = false;
-            xDistance.getStyleClass().add("wrongButton");
-        }
-        if (!(trajectory.getInitialVelocity()[0] + 0.1 > xVelocityAnswer && trajectory.getInitialVelocity()[0] - 0.1 <= xVelocityAnswer)) {
-            isRight = false;
-            xVelocity.getStyleClass().add("wrongButton");
-        }
-        if (!(trajectory.getTime()+ 0.1 >= timeAnswer && trajectory.getTime()- 0.1 <= timeAnswer)) {
-            isRight = false;
-            time.getStyleClass().add("wrongButton");
-        }
-        if (!(trajectory.getyPos()+ 0.1 >= yPosAnswer && trajectory.getyPos()- 0.1 <= yPosAnswer)) {
-            isRight = false;
-            yPos.getStyleClass().add("wrongButton");
-        }
-        if (!(trajectory.getInitialVelocity()[1] + 0.1 >= initialYVelocityAnswer && trajectory.getInitialVelocity()[1] - 0.1 <= initialYVelocityAnswer)) {
-            isRight = false;
-            initialYVelocity.getStyleClass().add("wrongButton");
-        }
-        if (!(trajectory.getFinalVelocity()[1] + 0.1 >= finalYVelocityAnswer && trajectory.getFinalVelocity()[1] - 0.1 <= finalYVelocityAnswer)) {
-            isRight = false;
-            finalYVelocity.getStyleClass().add("wrongButton");
-        }
+        try {
+            double xDistanceAnswer = lockedFields.contains(xDistance) ? trajectory.getDistance() : Double.parseDouble(xDistance.getText());
+            double xVelocityAnswer = lockedFields.contains(xVelocity) ? trajectory.getInitialVelocity()[0] : Double.parseDouble(xVelocity.getText());
+            double yPosAnswer = lockedFields.contains(yPos) ? trajectory.getyPos() : Double.parseDouble(yPos.getText());
+            double initialYVelocityAnswer = lockedFields.contains(initialYVelocity) ? trajectory.getInitialVelocity()[1] : Double.parseDouble(initialYVelocity.getText());
+            double finalYVelocityAnswer = lockedFields.contains(finalYVelocity) ? trajectory.getFinalVelocity()[1] : Double.parseDouble(finalYVelocity.getText());
+            double timeAnswer = lockedFields.contains(time) ? trajectory.getTime() : Double.parseDouble(time.getText());
 
-        // undefined spaghetti
-        if (!isRight) {
-            int tries = triesLeft.get();
-            triesLeft.set(tries - 1);
-            return;
+
+            // convergent spaghetti
+            if (!(trajectory.getDistance() + 0.1 >= xDistanceAnswer && trajectory.getDistance() - 0.1 <= xDistanceAnswer)) {
+                isRight = false;
+                xDistance.getStyleClass().add("wrongButton");
+            }
+            if (!(trajectory.getInitialVelocity()[0] + 0.1 > xVelocityAnswer && trajectory.getInitialVelocity()[0] - 0.1 <= xVelocityAnswer)) {
+                isRight = false;
+                xVelocity.getStyleClass().add("wrongButton");
+            }
+            if (!(trajectory.getTime()+ 0.1 >= timeAnswer && trajectory.getTime()- 0.1 <= timeAnswer)) {
+                isRight = false;
+                time.getStyleClass().add("wrongButton");
+            }
+            if (!(trajectory.getyPos()+ 0.1 >= yPosAnswer && trajectory.getyPos()- 0.1 <= yPosAnswer)) {
+                isRight = false;
+                yPos.getStyleClass().add("wrongButton");
+            }
+            if (!(trajectory.getInitialVelocity()[1] + 0.1 >= initialYVelocityAnswer && trajectory.getInitialVelocity()[1] - 0.1 <= initialYVelocityAnswer)) {
+                isRight = false;
+                initialYVelocity.getStyleClass().add("wrongButton");
+            }
+            if (!(trajectory.getFinalVelocity()[1] + 0.1 >= finalYVelocityAnswer && trajectory.getFinalVelocity()[1] - 0.1 <= finalYVelocityAnswer)) {
+                isRight = false;
+                finalYVelocity.getStyleClass().add("wrongButton");
+            }
+
+            // undefined spaghetti
+            if (!isRight) {
+                int tries = triesLeft.get();
+                triesLeft.set(tries - 1);
+                return;
+            }
+
+            success.set(true);
+        } catch (NumberFormatException e) {
+            errorLbl.setText("Answer must be a number with no digits!");
+            errorLbl.setTextFill(Color.DARKRED);
         }
-        
-        success.set(true);
     }
     
     /**

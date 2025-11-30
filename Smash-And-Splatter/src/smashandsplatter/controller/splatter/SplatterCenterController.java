@@ -57,20 +57,25 @@ public class SplatterCenterController {
             
             pie.setFitHeight(75);
             pie.setFitWidth(75);
+            pie.setMouseTransparent(true);
             
             thrower.setImage(new Image("file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie1.png"));
             thrower.setX(0);
             thrower.setY(500 - 80 - trajectory.getyPos() * 5);
+            thrower.setMouseTransparent(true);
             
             Rectangle floor = new Rectangle(-200, 500 - 80 - trajectory.getyPos() * 5 + 125, 400, 500);
             floor.setFill(new Color(0.1098, 0.5922, 0.0, 1.0));
             floor.setStroke(null);
+            floor.setMouseTransparent(true);
             
             root.getChildren().add(0, floor);
+            root.setMouseTransparent(true);
             
             receiver.setImage(new Image("file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie1.png"));
             receiver.setX(trajectory.getDistance() * 15 - 60);
             receiver.setY(450);
+            receiver.setMouseTransparent(true);
             
             Animation pieAnimation = makePieThrownAnimation();
 

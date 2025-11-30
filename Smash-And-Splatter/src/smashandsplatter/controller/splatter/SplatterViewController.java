@@ -61,7 +61,6 @@ public class SplatterViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterSidebar.fxml"));
         try {
             VBox sidebar = loader.load();
-            root.setLeft(sidebar);
 
             cont = loader.getController();
             initializeHandlers();
@@ -87,6 +86,7 @@ public class SplatterViewController implements Initializable {
             root.setRight(heartBox);
             
             root.setCenter(center);
+            root.setLeft(sidebar);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
