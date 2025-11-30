@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,6 +49,7 @@ public class SplatterViewController implements Initializable {
     private SplatterSidebarController cont;
     private SplatterCenterController centerCont;
     private VBox heartBox;
+    private boolean mainMenuLoaded = false;
     
     /**
      * Initializes the controller class.
@@ -156,7 +158,26 @@ public class SplatterViewController implements Initializable {
                 
             });
             
-            ParallelTransition parallel = new ParallelTransition(failAnim, pt);
+            PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 4.5));
+            System.out.println("Here...");
+            delayBeforeSentBack.setOnFinished(event -> {
+                try {
+                    if (mainMenuLoaded) return;
+                    
+                    System.out.println("LOADING MAIN MENU...");
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/mainMenu/MainMenu.fxml"));
+                    Parent root = loader.load();
+                    System.out.println("MAIN MENU LOADED");
+
+                    Scene sc = new Scene(root);
+                    
+                    mainMenuLoaded = true;
+                    Main.getCurrStage().setScene(sc);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            ParallelTransition parallel = new ParallelTransition(failAnim, pt, delayBeforeSentBack);
             
             parallel.play();
         });
