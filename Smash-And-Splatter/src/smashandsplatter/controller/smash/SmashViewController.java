@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,6 +41,7 @@ public class SmashViewController implements Initializable {
     
     private SmashSidebarController cont;
     private VBox heartBox;
+    private SmashCenterController centerCont;
     
     @FXML
     private BorderPane root;
@@ -61,6 +65,10 @@ public class SmashViewController implements Initializable {
             cont = loader.getController();
             initializeHandlers();
             
+            FXMLLoader centerLoader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashCenter.fxml"));
+            Pane centerPane = centerLoader.load();
+            centerCont = centerLoader.getController();
+            
             heartBox = new VBox();
             heartBox.setSpacing(12);
             heartBox.setPadding(new Insets(60, 30, 30, 30));
@@ -75,8 +83,11 @@ public class SmashViewController implements Initializable {
             }
             
             root.setRight(heartBox);
+            
+            root.setCenter(centerPane);
         } catch(IOException e) {
             System.err.println("Could not read file!");
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,18 +112,23 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
-            anchorPane.getChildren().add(imgView);
-            root.setEffect(new GaussianBlur(5));
-            
+            PauseTransition delayBeforeLvlPassed = new PauseTransition(Duration.seconds(1));
             PauseTransition pt = new PauseTransition(Duration.seconds(3));
-            pt.play();
             pt.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
             
                 goToNextStage(triesLeft);
             });
-                    
+                  
             
+            Animation successAnimation = centerCont.getSuccessAnimation();
+            delayBeforeLvlPassed.setOnFinished(e -> {
+                anchorPane.getChildren().add(imgView);
+                root.setEffect(new GaussianBlur(5));
+                pt.play();
+            });
+            Animation animToPlay = new SequentialTransition(successAnimation, delayBeforeLvlPassed);
+            animToPlay.play();
         });
         
         cont.getTriesLeft().addListener((obs, oldVal, newVal) -> {
