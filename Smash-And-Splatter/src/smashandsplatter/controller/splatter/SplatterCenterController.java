@@ -19,10 +19,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import smashandsplatter.models.Trajectory;
 
@@ -59,6 +61,12 @@ public class SplatterCenterController {
             thrower.setImage(new Image("file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie1.png"));
             thrower.setX(0);
             thrower.setY(500 - 80 - trajectory.getyPos() * 5);
+            
+            Rectangle floor = new Rectangle(-200, 500 - 80 - trajectory.getyPos() * 5 + 125, 400, 500);
+            floor.setFill(new Color(0.1098, 0.5922, 0.0, 1.0));
+            floor.setStroke(null);
+            
+            root.getChildren().add(0, floor);
             
             receiver.setImage(new Image("file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie1.png"));
             receiver.setX(trajectory.getDistance() * 15 - 60);
