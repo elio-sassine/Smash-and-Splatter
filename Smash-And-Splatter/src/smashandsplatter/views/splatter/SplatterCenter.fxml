@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterCenterController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterCenterController">
    <children>
-      <ImageView fx:id="thrower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="pie" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="receiver" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Group layoutX="10.0" layoutY="10.0">
+         <children>
+            <ImageView fx:id="receiver" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="thrower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="pie" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
    </children>
-</AnchorPane>
+</Pane>

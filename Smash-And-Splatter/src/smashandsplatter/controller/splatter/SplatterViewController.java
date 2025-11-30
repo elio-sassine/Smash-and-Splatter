@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +17,13 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -42,6 +46,7 @@ public class SplatterViewController implements Initializable {
     private AnchorPane anchorPane;
     
     private SplatterSidebarController cont;
+    private SplatterCenterController centerCont;
     private VBox heartBox;
     
     /**
@@ -58,6 +63,11 @@ public class SplatterViewController implements Initializable {
 
             cont = loader.getController();
             initializeHandlers();
+            System.out.println(getClass().getResource("/smashandsplatter/views/splatter/SplatterCenter.fxml"));
+            FXMLLoader centerLoader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterCenter.fxml"));
+            Pane center = centerLoader.load();
+            
+            centerCont = centerLoader.getController();
             
             heartBox = new VBox();
             heartBox.setSpacing(12);
@@ -73,8 +83,10 @@ public class SplatterViewController implements Initializable {
             }
             
             root.setRight(heartBox);
+            
+            root.setCenter(center);
         } catch (IOException e) {
-            System.out.println("File not found!");
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,6 +98,7 @@ public class SplatterViewController implements Initializable {
                 // add fail code, usually unreachable
                 return;
             }
+            
             // add animation code on success
             Image img = new Image("file:src/smashandsplatter/resources/images/LevelPassed.png");
             ImageView imgView = new ImageView(img);
@@ -95,18 +108,21 @@ public class SplatterViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
-            anchorPane.getChildren().add(imgView);
-            root.setEffect(new GaussianBlur(5));
-            
-            PauseTransition pt = new PauseTransition(Duration.seconds(3));
-            pt.play();
-            pt.setOnFinished(e -> {
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
                 levelsPassed++;
                 goToNextStage(triesLeft);
             });
                     
+            Animation anim = centerCont.getFinalSuccessAnimation();
+            anim.setOnFinished(e -> {
+                anchorPane.getChildren().add(imgView);
+                root.setEffect(new GaussianBlur(5));
+                pause.play();
+            });
             
+            anim.play();
         });
         
         cont.getTriesLeft().addListener((obs, oldVal, newVal) -> {
@@ -128,8 +144,16 @@ public class SplatterViewController implements Initializable {
             
             System.out.println(levelsPassed);
             
-            anchorPane.getChildren().add(imgView);
-            root.setEffect(new GaussianBlur(5));   
+            Animation failAnim = centerCont.getFinalFailAnimation();
+            PauseTransition pt = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 2.5));
+            pt.setOnFinished(e -> {
+                anchorPane.getChildren().add(imgView);
+                Label failLbl = new Label("Levels Passed: " + levelsPassed);
+            });
+            
+            ParallelTransition parallel = new ParallelTransition(failAnim, pt);
+            
+            parallel.play();
         });
     }
     

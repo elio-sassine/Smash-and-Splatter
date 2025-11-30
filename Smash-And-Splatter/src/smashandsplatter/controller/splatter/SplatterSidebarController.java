@@ -151,7 +151,6 @@ public class SplatterSidebarController {
         boolean isRight = true;
         
         // divergent spaghetti
-        System.out.println(lockedFields);
         double xDistanceAnswer = lockedFields.contains(xDistance) ? trajectory.getDistance() : Double.parseDouble(xDistance.getText());
         double xVelocityAnswer = lockedFields.contains(xVelocity) ? trajectory.getInitialVelocity()[0] : Double.parseDouble(xVelocity.getText());
         double yPosAnswer = lockedFields.contains(yPos) ? trajectory.getyPos() : Double.parseDouble(yPos.getText());
@@ -185,7 +184,7 @@ public class SplatterSidebarController {
             finalYVelocity.getStyleClass().add("wrongButton");
         }
 
-        
+        // undefined spaghetti
         if (!isRight) {
             int tries = triesLeft.get();
             triesLeft.set(tries - 1);
