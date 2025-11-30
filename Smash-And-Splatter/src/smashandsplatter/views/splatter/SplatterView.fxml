@@ -2,9 +2,11 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../globalStyles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterViewController">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c9700" height="100.0" layoutX="-4.0" layoutY="500.0" strokeType="INSIDE" width="1007.0" />
       <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" />
    </children>
 </AnchorPane>

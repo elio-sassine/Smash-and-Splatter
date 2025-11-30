@@ -149,6 +149,11 @@ public class SplatterViewController implements Initializable {
             pt.setOnFinished(e -> {
                 anchorPane.getChildren().add(imgView);
                 Label failLbl = new Label("Levels Passed: " + levelsPassed);
+                anchorPane.getChildren().add(failLbl);
+                
+                failLbl.setLayoutX(450);
+                failLbl.setLayoutY(400);
+                
             });
             
             ParallelTransition parallel = new ParallelTransition(failAnim, pt);
