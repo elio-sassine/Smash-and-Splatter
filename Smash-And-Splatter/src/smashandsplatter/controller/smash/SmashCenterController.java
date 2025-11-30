@@ -113,14 +113,16 @@ public class SmashCenterController {
         KeyFrame[] keyFrames = new KeyFrame[2];
         
         keyFrames[0] = new KeyFrame(Duration.ZERO, 
-                new KeyValue(person.imageProperty(), new Image("file:src/smashandsplatter/resources/images/AnimationMuscleHuman/HumanBuff1.png"))
+                new KeyValue(person.imageProperty(), new Image("file:src/smashandsplatter/resources/images/AnimationMuscleHuman/HumanBuff1.png")),
+                new KeyValue(person.viewOrderProperty(), 100),
+                new KeyValue(boulder.viewOrderProperty(), 0)
         );
         
         keyFrames[1] = new KeyFrame(Duration.seconds(1.85), 
-                new KeyValue(person.imageProperty(), new Image(pathToFormat))
+                new KeyValue(person.imageProperty(), new Image(pathToFormat)),
+                new KeyValue(person.viewOrderProperty(), 100),
+                new KeyValue(boulder.viewOrderProperty(), 0)
         );
-        
-        person.toBack();
         
         return new Timeline(keyFrames);
     }

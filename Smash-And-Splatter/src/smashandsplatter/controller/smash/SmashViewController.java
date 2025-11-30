@@ -17,7 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.effect.Bloom;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -87,8 +86,8 @@ public class SmashViewController implements Initializable {
             root.setCenter(centerPane);
         } catch(IOException e) {
             System.err.println("Could not read file!");
-            e.printStackTrace();
         } catch (Exception e) {
+            System.err.println("Yeah idk bro look at the stack trace");
             e.printStackTrace();
         }
     }    
