@@ -42,6 +42,8 @@ public class SmashViewController implements Initializable {
     private SmashSidebarController cont;
     private VBox heartBox;
     private SmashCenterController centerCont;
+    private boolean mainMenuLoaded = false; // Flag to ensure the scene is set only once
+
     
     @FXML
     private BorderPane root;
@@ -162,8 +164,28 @@ public class SmashViewController implements Initializable {
                 root.setEffect(new GaussianBlur(5));
             });
             
+            PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(2));
+            System.out.println("Here...");
+            delayBeforeSentBack.setOnFinished(event -> {
+                try {
+                    if (mainMenuLoaded) return;
+                    
+                    System.out.println("LOADING MAIN MENU...");
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/mainMenu/MainMenu.fxml"));
+                    Parent root = loader.load();
+                    System.out.println("MAIN MENU LOADED");
+
+                    Scene sc = new Scene(root);
+                    
+                    mainMenuLoaded = true;
+                    Main.getCurrStage().setScene(sc);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            
             Animation failAnim = centerCont.getFailAnimation();
-            new SequentialTransition(failAnim, delayBeforeLevelFail).play();
+            new SequentialTransition(failAnim, delayBeforeLevelFail, delayBeforeSentBack).play();
         });
     }
     
