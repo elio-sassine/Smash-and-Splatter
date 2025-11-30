@@ -36,13 +36,9 @@ import javafx.util.Duration;
 public class SmashCenterController {
 
     @FXML
-    private Pane root;
-    @FXML
     private ImageView person;
     @FXML
     private ImageView boulder;
-    @FXML
-    private ImageView logBase;
     @FXML
     private ImageView logMoving;
     
@@ -108,6 +104,10 @@ public class SmashCenterController {
         return new SequentialTransition(timeline, pathTransition);
     }
     
+    /**
+     * Makes the animation for the person getting crushed
+     * @return an animation of the person getting crushed
+     */
     private Animation manGettingCrushed() {
         String pathToFormat = "file:src/smashandsplatter/resources/images/BoulderCrushDrawings/Humandown.png";
         KeyFrame[] keyFrames = new KeyFrame[2];
@@ -127,6 +127,10 @@ public class SmashCenterController {
         return new Timeline(keyFrames);
     }
 
+    /**
+     * Makes the animation for the rock falling on fail
+     * @return an animation of the rock falling
+     */
     public Animation rockFallingFail() {
         double timeToFall = 1.0;
         

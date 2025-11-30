@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.smash.SmashCenterController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.smash.SmashCenterController">
    <children>
       <ImageView fx:id="boulder" fitHeight="178.0" fitWidth="200.0" layoutX="239.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -17,7 +17,7 @@
             <Image url="@../../resources/images/AnimationMuscleHuman/HumanBuff1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="logBase" fitHeight="292.0" fitWidth="297.0" layoutX="230.0" layoutY="-62.0" pickOnBounds="true" preserveRatio="true" rotate="-30.0">
+      <ImageView fitHeight="292.0" fitWidth="297.0" layoutX="230.0" layoutY="-62.0" pickOnBounds="true" preserveRatio="true" rotate="-30.0">
          <image>
             <Image url="@../../resources/images/Logbase.png" />
          </image>
