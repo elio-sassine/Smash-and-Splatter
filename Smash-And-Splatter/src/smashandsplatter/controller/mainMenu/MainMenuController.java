@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import smashandsplatter.Main;
 
 /**
@@ -34,6 +36,8 @@ public class MainMenuController implements Initializable {
     private Button splatterBtn;
     @FXML
     private ImageView titleImgView;
+    @FXML
+    private MediaPlayer playerStart;
 
     /**
      * Initializes the controller class.
@@ -57,18 +61,25 @@ public class MainMenuController implements Initializable {
         
         splatterBtn.setGraphic(splatterImgView);
         splatterBtn.setBackground(Background.EMPTY);
+        
+        String path = getClass().getResource("/smashandsplatter/resources/music/StartGameMusic.mp3").toString();
+        Media musicStart = new Media(path);
+        playerStart = new MediaPlayer(musicStart);
+        playerStart.setCycleCount(MediaPlayer.INDEFINITE);
+        playerStart.play();
     }    
 
     //Handles actions when smash button is pressed
     @FXML
     private void handleSmash(ActionEvent event) {
         try {
+            playerStart.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashView.fxml"));
             Parent root = loader.load();
 
             Scene sc = new Scene(root);
             
-            Main.getCurrStage().setScene(sc);
+            Main.getCurrStage().setScene(sc);           
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,6 +90,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private void handleSplatter(ActionEvent event) {
         try {
+            playerStart.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterView.fxml"));
             Parent root = loader.load();
 

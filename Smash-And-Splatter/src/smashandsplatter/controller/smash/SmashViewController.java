@@ -29,6 +29,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
 import smashandsplatter.models.Torque;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * FXML Controller class
@@ -54,6 +56,12 @@ public class SmashViewController implements Initializable {
     private Rectangle sky;
     @FXML
     private Rectangle grass;
+    @FXML
+    private MediaPlayer playerSmash;
+    @FXML
+    private MediaPlayer playerSucess;
+    @FXML
+    private MediaPlayer playerLose;
     
     /**
      * Initializes the controller class.
@@ -95,6 +103,12 @@ public class SmashViewController implements Initializable {
             root.setRight(heartBox);
             
             root.setCenter(centerPane);
+            
+            String path = getClass().getResource("/smashandsplatter/resources/music/SmashGameMusic.mp3").toString();
+            Media musicSmash = new Media(path);
+            playerSmash = new MediaPlayer(musicSmash);
+            playerSmash.setCycleCount(MediaPlayer.INDEFINITE);
+            playerSmash.play();
         } catch(IOException e) {
             System.err.println("Could not read file!");
         } catch (Exception e) {
@@ -124,7 +138,7 @@ public class SmashViewController implements Initializable {
             imgView.setY(50);
             
             PauseTransition delayBeforeLvlPassed = new PauseTransition(Duration.seconds(1));
-            PauseTransition pt = new PauseTransition(Duration.seconds(3));
+            PauseTransition pt = new PauseTransition(Duration.seconds(5.5));
             pt.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
             
@@ -134,6 +148,12 @@ public class SmashViewController implements Initializable {
             
             Animation successAnimation = centerCont.getSuccessAnimation();
             delayBeforeLvlPassed.setOnFinished(e -> {
+                playerSmash.stop();
+            
+                String path = getClass().getResource("/smashandsplatter/resources/music/WinLevelMusic.mp3").toString();
+                Media musicSucess = new Media(path);
+                playerSucess = new MediaPlayer(musicSucess);
+                playerSucess.play();
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
                 pt.play();
@@ -161,11 +181,18 @@ public class SmashViewController implements Initializable {
             
             PauseTransition delayBeforeLevelFail = new PauseTransition(Duration.seconds(1));
             delayBeforeLevelFail.setOnFinished(e -> {
+                playerSmash.stop();
+                
+                String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
+                Media musicLose = new Media(path);
+                playerLose = new MediaPlayer(musicLose);
+                playerLose.play();
+                
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
             });
             
-            PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(2));
+            PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(4));
             System.out.println("Here...");
             delayBeforeSentBack.setOnFinished(event -> {
                 try {

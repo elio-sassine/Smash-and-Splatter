@@ -26,6 +26,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
@@ -50,6 +52,13 @@ public class SplatterViewController implements Initializable {
     private SplatterCenterController centerCont;
     private VBox heartBox;
     private boolean mainMenuLoaded = false;
+    
+    @FXML
+    private MediaPlayer playerSplatter;
+    @FXML
+    private MediaPlayer playerSucess;
+    @FXML
+    private MediaPlayer playerLose;
     
     /**
      * Initializes the controller class.
@@ -86,6 +95,12 @@ public class SplatterViewController implements Initializable {
             root.setRight(heartBox);
             root.setLeft(sidebar);
             root.setCenter(center);
+            
+            String path = getClass().getResource("/smashandsplatter/resources/music/SplatterGameMusic.mp3").toString();
+            Media musicSplatter = new Media(path);
+            playerSplatter = new MediaPlayer(musicSplatter);
+            playerSplatter.setCycleCount(MediaPlayer.INDEFINITE);
+            playerSplatter.play();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -109,7 +124,7 @@ public class SplatterViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
                 levelsPassed++;
@@ -120,6 +135,13 @@ public class SplatterViewController implements Initializable {
             anim.setOnFinished(e -> {
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
+                
+                playerSplatter.stop();
+            
+                String path = getClass().getResource("/smashandsplatter/resources/music/WinLevelMusic.mp3").toString();
+                Media musicSucess = new Media(path);
+                playerSucess = new MediaPlayer(musicSucess);
+                playerSucess.play();
                 pause.play();
             });
             
@@ -146,6 +168,13 @@ public class SplatterViewController implements Initializable {
             System.out.println(levelsPassed);
             
             Animation failAnim = centerCont.getFinalFailAnimation();
+            
+            PauseTransition p = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 2.9));
+            
+            p.setOnFinished(e -> {
+                playerSplatter.stop();
+            });
+            
             PauseTransition pt = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 2.5));
             pt.setOnFinished(e -> {
                 anchorPane.getChildren().add(imgView);
@@ -155,13 +184,19 @@ public class SplatterViewController implements Initializable {
                 failLbl.setLayoutX(450);
                 failLbl.setLayoutY(400);
                 
+                String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
+                Media musicLose = new Media(path);
+                playerLose = new MediaPlayer(musicLose);
+                playerLose.play();
+                
             });
             
-            PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 4.5));
+            PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 4.5 + 3));
             System.out.println("Here...");
             delayBeforeSentBack.setOnFinished(event -> {
                 try {
                     if (mainMenuLoaded) return;
+                    
                     
                     System.out.println("LOADING MAIN MENU...");
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/mainMenu/MainMenu.fxml"));
@@ -176,7 +211,7 @@ public class SplatterViewController implements Initializable {
                     e.printStackTrace();
                 }
             });
-            ParallelTransition parallel = new ParallelTransition(failAnim, pt, delayBeforeSentBack);
+            ParallelTransition parallel = new ParallelTransition(failAnim, pt, p, delayBeforeSentBack);
             
             parallel.play();
         });
