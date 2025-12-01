@@ -17,14 +17,19 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
@@ -43,6 +48,8 @@ public class SmashViewController implements Initializable {
     private VBox heartBox;
     private SmashCenterController centerCont;
     private boolean mainMenuLoaded = false; // Flag to ensure the scene is set only once
+    
+    private static int levelsPassed = 0;
 
     
     @FXML
@@ -123,6 +130,7 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
+            
             PauseTransition delayBeforeLvlPassed = new PauseTransition(Duration.seconds(1));
             PauseTransition pt = new PauseTransition(Duration.seconds(3));
             pt.setOnFinished(e -> {
@@ -134,6 +142,7 @@ public class SmashViewController implements Initializable {
             
             Animation successAnimation = centerCont.getSuccessAnimation();
             delayBeforeLvlPassed.setOnFinished(e -> {
+                levelsPassed++;
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
                 pt.play();
@@ -159,9 +168,24 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
+            Label levelsPassedLbl = new Label("Levels Passed: " + levelsPassed);
+            levelsPassedLbl.setLayoutX(450);
+            levelsPassedLbl.setLayoutY(400);
+            levelsPassedLbl.setFont(Font.font("Awasete Powder"));
+            levelsPassedLbl.setScaleX(2);
+            levelsPassedLbl.setScaleY(2);
+            
+            DropShadow glow = new DropShadow();
+            glow.setColor(Color.WHITE);     // glow color
+            glow.setRadius(1);            // size of glow
+            glow.setSpread(1);
+
+            levelsPassedLbl.setEffect(glow);
+            
             PauseTransition delayBeforeLevelFail = new PauseTransition(Duration.seconds(1));
             delayBeforeLevelFail.setOnFinished(e -> {
                 anchorPane.getChildren().add(imgView);
+                anchorPane.getChildren().add(levelsPassedLbl);
                 root.setEffect(new GaussianBlur(5));
             });
             

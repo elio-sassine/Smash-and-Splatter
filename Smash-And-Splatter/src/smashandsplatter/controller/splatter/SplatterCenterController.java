@@ -39,13 +39,13 @@ public class SplatterCenterController {
     @FXML
     private Pane root;
 
-    @FXML
-    private ImageView thrower;
-    
     private Trajectory trajectory;
     private Animation finalFailAnimation;
     private Animation finalSuccessAnimation;
     
+    /**
+     * Initializer for the FXML controller
+     */
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
@@ -57,11 +57,6 @@ public class SplatterCenterController {
             pie.setFitHeight(75);
             pie.setFitWidth(75);
             pie.setMouseTransparent(true);
-            
-            thrower.setImage(new Image("file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie1.png"));
-            thrower.setX(0);
-            thrower.setY(500 - 80 - trajectory.getyPos() * 5);
-            thrower.setMouseTransparent(true);
             
             Rectangle floor = new Rectangle(-200, 500 - 80 - trajectory.getyPos() * 5 + 125, 400, 500);
             floor.setFill(new Color(0.1098, 0.5922, 0.0, 1.0));
@@ -87,6 +82,10 @@ public class SplatterCenterController {
         });
     }
     
+    /**
+     * Animation of pie sliding down the person's face
+     * @return Animation
+     */
     private Animation makePieThrownAnimation() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, 
@@ -102,7 +101,6 @@ public class SplatterCenterController {
                         trajectory.getControlX() * 15 + 20, 
                         500 - trajectory.getControlY() * 5,
                         trajectory.getDistance() * 15 + 20,
-                        // placeholder value until we actually do the person
                         500
                 )
         );
@@ -117,6 +115,10 @@ public class SplatterCenterController {
         return new SequentialTransition(timeline, animation);
     };
     
+    /**
+     * Animation of pie sliding down the person's face
+     * @return Animation
+     */
     private Animation personPunchingAnimation() {
         double timeToThrow = 1.0;
         String stringToFormat = "file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie%d.png";
@@ -129,7 +131,7 @@ public class SplatterCenterController {
                             receiver.imageProperty(), 
                             new Image(String.format(stringToFormat, i + 1))
                     ), 
-                    new KeyValue(pie.yProperty(), pie.getY() - 100)
+                    new KeyValue(pie.translateYProperty(), 510)
             );
         }
         
@@ -138,6 +140,10 @@ public class SplatterCenterController {
         return finalAnim;
     }
     
+    /**
+     * Animation of pie sliding down the person's face
+     * @return Animation
+     */
     private Animation pieAllOverScreenAnimation() {
         double timeToSlide = 1.5;
         String stringToFormat = "file:src/smashandsplatter/resources/images/Creamanimation/Cream%d.png";
@@ -190,6 +196,10 @@ public class SplatterCenterController {
         return new SequentialTransition(beforeScreenAnim, screenAnim); 
     }
     
+    /**
+     * Animation of pie sliding down the person's face
+     * @return Animation
+     */
     private Animation personFacePie() {
         double timeToSlide = 1.0;
         String stringToFormat = "file:src/smashandsplatter/resources/images/PieThrow%d.png";
