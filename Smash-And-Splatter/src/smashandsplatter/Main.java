@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
+ * The launch point of the app
  * @author eliob
  */
 public class Main extends Application {
@@ -25,6 +25,7 @@ public class Main extends Application {
     private static Scene currScene;
 
     /**
+     * launch point
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -52,15 +53,27 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * the current stage
+     * @return stage
+     */
     public static Stage getCurrStage() {
         return currStage;
     }
 
+    /**
+     * the current scene
+     * @return scene
+     */
     public static Scene getCurrScene() {
         return currScene;
     }
 
+    /**
+     * sets current scene
+     * @param currScene scene
+     */
     public static void setCurrScene(Scene currScene) {
         Main.currScene = currScene;
     }

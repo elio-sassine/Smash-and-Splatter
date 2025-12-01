@@ -26,7 +26,7 @@ import smashandsplatter.controller.mainMenu.MainMenuController;
 import smashandsplatter.models.Trajectory;
 
 /**
- *
+ * Controller for SplatterCenter
  * @author eliob
  */
 public class SplatterCenterController {
@@ -239,10 +239,18 @@ public class SplatterCenterController {
         return finalAnim; 
     }
 
+    /**
+     * gets the final fail animation
+     * @return final fail animation
+     */
     public Animation getFinalFailAnimation() {
         return finalFailAnimation;
     }
 
+    /**
+     * gets the final success animation
+     * @return final success animation
+     */
     public Animation getFinalSuccessAnimation() {
         return finalSuccessAnimation;
     }

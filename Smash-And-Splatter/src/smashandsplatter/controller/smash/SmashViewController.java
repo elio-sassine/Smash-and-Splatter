@@ -80,12 +80,6 @@ public class SmashViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-        volumeOn.setPreserveRatio(true);
-        volumeOn.setFitHeight(40);
-        volumeOn.setFitWidth(40);
-        muteBtn.setGraphic(volumeOn);
-        
         torque1 = new Torque();
         torque2 = new Torque();
         // makes sure they are behind everything
@@ -126,7 +120,24 @@ public class SmashViewController implements Initializable {
             Media musicSmash = new Media(path);
             playerSmash = new MediaPlayer(musicSmash);
             playerSmash.setCycleCount(MediaPlayer.INDEFINITE);
-            playerSmash.setMute(MainMenuController.isMuted());
+            
+            if (!MainMenuController.isMuted()) {
+                ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+                volumeOn.setPreserveRatio(true);
+                volumeOn.setFitHeight(40);
+                volumeOn.setFitWidth(40);
+                muteBtn.setGraphic(volumeOn);
+                playerSmash.setMute(MainMenuController.isMuted());
+
+            } else {
+                playerSmash.setMute(MainMenuController.isMuted());
+                ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+                volumeOff.setPreserveRatio(true);
+                volumeOff.setFitHeight(50);
+                volumeOff.setFitWidth(50);
+                muteBtn.setGraphic(volumeOff);
+            }
+            
             playerSmash.play();
         } catch(IOException e) {
             System.err.println("Could not read file!");
@@ -172,11 +183,30 @@ public class SmashViewController implements Initializable {
             
                 String path = getClass().getResource("/smashandsplatter/resources/music/WinLevelMusic.mp3").toString();
                 Media musicSucess = new Media(path);
-                playerSuccess = new MediaPlayer(musicSucess);
+                playerSuccess = new MediaPlayer(musicSucess);                
+                playerSuccess.setMute(MainMenuController.isMuted());
                 playerSuccess.play();
                 levelsPassed++;
+                
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
+                Label failLbl = new Label("Levels Passed: " + levelsPassed);
+                anchorPane.getChildren().add(failLbl);
+                
+                failLbl.setLayoutX(450);
+                failLbl.setLayoutY(400);
+                failLbl.setScaleX(2);
+                failLbl.setScaleY(2);
+                
+                failLbl.setFont(Font.font("Awasete Powder"));
+
+                
+                DropShadow glow = new DropShadow();
+                glow.setColor(Color.WHITE);     // glow color
+                glow.setRadius(1);            // size of glow
+                glow.setSpread(1);
+                failLbl.setEffect(glow);
+                
                 pt.play();
             });
             Animation animToPlay = new SequentialTransition(successAnimation, delayBeforeLvlPassed);
@@ -221,6 +251,7 @@ public class SmashViewController implements Initializable {
                 String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
                 Media musicLose = new Media(path);
                 playerLose = new MediaPlayer(musicLose);
+                playerLose.setMute(MainMenuController.isMuted());
                 playerLose.play();
                 
                 anchorPane.getChildren().add(imgView);
@@ -328,4 +359,12 @@ public class SmashViewController implements Initializable {
     public static Torque getTorque2() {
         return torque2;
     }   
+
+    /**
+     * sets the amount of levels passed, used to reset
+     * @param levelsPassed amount of levels passed
+     */
+    public static void setLevelsPassed(int levelsPassed) {
+        SmashViewController.levelsPassed = levelsPassed;
+    }
 }

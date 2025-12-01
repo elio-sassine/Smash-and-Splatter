@@ -21,11 +21,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import smashandsplatter.Main;
+import smashandsplatter.controller.smash.SmashViewController;
+import smashandsplatter.controller.splatter.SplatterViewController;
 
 /**
  * FXML Controller class
  *
- * @author Raluca
+ * @author Antonia
  */
 public class MainMenuController implements Initializable {
 
@@ -44,7 +46,9 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button muteBtn;
 
-    
+    /**
+     * Enum representing player types
+     */
     public enum Player {
         ALIEN("Alien"), HUMAN("Human"), ZOMBIE("Zombie");
 
@@ -53,11 +57,19 @@ public class MainMenuController implements Initializable {
         private Player(String displayName) {
             this.displayName = displayName;
         }
-
+        
+        /**
+         * gets the display name of the player
+         * @return string representation of player
+         */
         public String getDisplayName() {
             return displayName;
         }
 
+        /**
+         * gets the display name of the player
+         * @return string representation of player
+         */
         @Override 
         public String toString() {
             return displayName;
@@ -135,7 +147,9 @@ public class MainMenuController implements Initializable {
             playerStart.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashView.fxml"));
             Parent root = loader.load();
-
+            SmashViewController cont = loader.getController();
+            cont.setLevelsPassed(0);
+            
             Scene sc = new Scene(root);
             
             Main.getCurrStage().setScene(sc);           
@@ -152,6 +166,8 @@ public class MainMenuController implements Initializable {
             playerStart.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterView.fxml"));
             Parent root = loader.load();
+            SplatterViewController cont = loader.getController();
+            cont.setLevelsPassed(0);
 
             Scene sc = new Scene(root);
             
@@ -185,18 +201,28 @@ public class MainMenuController implements Initializable {
         volumeOff.setFitWidth(50);
         muteBtn.setGraphic(volumeOff);
     }
-
+    
+    /**
+     * current player
+     * @return Player
+     */
     public static Player getCurrPlayer() {
         return currPlayer;
     }
 
+    /**
+     * is muted or not
+     * @return boolean muted
+     */
     public static boolean isMuted() {
         return muted;
     }
 
+    /**
+     * sets muted state
+     * @param muted boolean defining mute state
+     */
     public static void setMuted(boolean muted) {
         MainMenuController.muted = muted;
     }
-    
-    
 }

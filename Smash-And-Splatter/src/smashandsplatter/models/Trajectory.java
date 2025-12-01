@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- *
+ * Class representing Trajectory
  * @author eliob
  */
 public class Trajectory {
@@ -45,6 +45,14 @@ public class Trajectory {
         computeBezierControlPoint();
     }
 
+    /**
+     * Makes a trajectory model with pre-defined fields
+     * @param yPos height in m
+     * @param distance distance in m
+     * @param time time in s
+     * @param initialVelocity initial velocity as a vector [x, y]
+     * @param finalVelocity final velocity as a vector [x, y]
+     */
     public Trajectory(double yPos, double distance, double time, double[] initialVelocity, double[] finalVelocity) {
         this.yPos = yPos;
         this.distance = distance;
@@ -180,9 +188,18 @@ public class Trajectory {
         return peakY;
     }
     
+    /**
+     * gets the bezier control point x
+     * @return coordinate
+     */
     public double getControlX() { 
         return controlX; 
     }
+    
+    /**
+     * gets the bezier control point y
+     * @return coordinate
+     */
     public double getControlY() { 
         return controlY; 
     }
