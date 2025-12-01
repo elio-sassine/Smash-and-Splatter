@@ -19,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
@@ -183,12 +186,19 @@ public class SplatterViewController implements Initializable {
                 
                 failLbl.setLayoutX(450);
                 failLbl.setLayoutY(400);
+                failLbl.setScaleX(2);
+                failLbl.setScaleY(2);
                 
                 String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
                 Media musicLose = new Media(path);
                 playerLose = new MediaPlayer(musicLose);
                 playerLose.play();
                 
+                DropShadow glow = new DropShadow();
+                glow.setColor(Color.WHITE);     // glow color
+                glow.setRadius(1);            // size of glow
+                glow.setSpread(1);
+                failLbl.setEffect(glow);
             });
             
             PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 4.5 + 3));

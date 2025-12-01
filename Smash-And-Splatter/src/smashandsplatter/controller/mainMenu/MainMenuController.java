@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -39,11 +40,45 @@ public class MainMenuController implements Initializable {
     @FXML
     private MediaPlayer playerStart;
 
+    private ChoiceBox<Player> choiceBox;
+    
+    public enum Player {
+        ALIEN("Alien"), HUMAN("Human"), ZOMBIE("Zombie");
+
+        private final String displayName;
+
+        private Player(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        @Override 
+        public String toString() {
+            return displayName;
+        }
+    }
+    
+    private static Player currPlayer = Player.HUMAN;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        choiceBox.getItems().add(Player.HUMAN);
+        choiceBox.getItems().add(Player.ALIEN);
+        choiceBox.getItems().add(Player.ZOMBIE);
+        
+        choiceBox.setValue(currPlayer);
+        
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println(newVal);
+            currPlayer = newVal;
+        });
+        
         Image smashImg = new Image(getClass().getResource("/smashandsplatter/resources/images/SmashButton.png")
                         .toExternalForm());
         ImageView smashImgView = new ImageView(smashImg);
@@ -101,5 +136,8 @@ public class MainMenuController implements Initializable {
             e.printStackTrace();
         }
     }
-    
+
+    public static Player getCurrPlayer() {
+        return currPlayer;
+    }
 }
