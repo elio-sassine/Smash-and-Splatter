@@ -28,6 +28,7 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+import smashandsplatter.controller.mainMenu.MainMenuController;
 
 /**
  * FXML Controller class
@@ -45,12 +46,17 @@ public class SmashCenterController {
     
     private Animation successAnimation;
     private Animation failAnimation;
+    private MainMenuController.Player currPlayer = MainMenuController.getCurrPlayer();
 
     /**
      * Initializes the controller class.
      */
     @FXML
     public void initialize() {
+        person.setImage(new Image(
+                String.format("file:src/smashandsplatter/resources/images/AnimationMuscle%s/%smuscle1.png", currPlayer, currPlayer)
+        ));
+        
         successAnimation = new ParallelTransition(personBuffAnimation(), rockFallingSuccess());
         failAnimation = new ParallelTransition(rockFallingFail(), manGettingCrushed());
     }    
@@ -61,12 +67,12 @@ public class SmashCenterController {
      */
     private Animation personBuffAnimation() {
         double timeToBuff = 1.5;
-        String pathToFormat = "file:src/smashandsplatter/resources/images/AnimationMuscleHuman/HumanBuff%d.png";
+        String pathToFormat = "file:src/smashandsplatter/resources/images/AnimationMuscle%s/%smuscle%d.png";
         KeyFrame[] keyFrames = new KeyFrame[13];
         
         for (int i = 0; i < 13; i++) {
             keyFrames[i] = new KeyFrame(Duration.seconds(i * (timeToBuff / 12)), 
-                    new KeyValue(person.imageProperty(), new Image(String.format(pathToFormat, i + 1)))
+                    new KeyValue(person.imageProperty(), new Image(String.format(pathToFormat, currPlayer, currPlayer, i + 1)))
             );
         }
         
@@ -117,17 +123,27 @@ public class SmashCenterController {
      * @return an animation of the person getting crushed
      */
     private Animation manGettingCrushed() {
-        String pathToFormat = "file:src/smashandsplatter/resources/images/BoulderCrushDrawings/Humandown.png";
+        String pathToFormat = "file:src/smashandsplatter/resources/images/BoulderCrushDrawings/%sdown.png";
         KeyFrame[] keyFrames = new KeyFrame[2];
         
+        System.out.println(String.format(
+                                "file:src/smashandsplatter/resources/images/AnimationMuscle%s/%smuscle1.png", 
+                                currPlayer, currPlayer
+        ));
         keyFrames[0] = new KeyFrame(Duration.ZERO, 
-                new KeyValue(person.imageProperty(), new Image("file:src/smashandsplatter/resources/images/AnimationMuscleHuman/HumanBuff1.png")),
+                new KeyValue(person.imageProperty(), new Image(
+                        String.format(
+                                "file:src/smashandsplatter/resources/images/AnimationMuscle%s/%smuscle1.png", 
+                                currPlayer, currPlayer
+                        )
+                    )
+                ),
                 new KeyValue(person.viewOrderProperty(), 100),
                 new KeyValue(boulder.viewOrderProperty(), 0)
         );
         
         keyFrames[1] = new KeyFrame(Duration.seconds(1.85), 
-                new KeyValue(person.imageProperty(), new Image(pathToFormat)),
+                new KeyValue(person.imageProperty(), new Image(String.format(pathToFormat, currPlayer))),
                 new KeyValue(person.viewOrderProperty(), 100),
                 new KeyValue(boulder.viewOrderProperty(), 0)
         );

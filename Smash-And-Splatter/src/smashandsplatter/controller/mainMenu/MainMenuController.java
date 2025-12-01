@@ -124,5 +124,8 @@ public class MainMenuController implements Initializable {
             e.printStackTrace();
         }
     }
-    
+
+    public static Player getCurrPlayer() {
+        return currPlayer;
+    }
 }
