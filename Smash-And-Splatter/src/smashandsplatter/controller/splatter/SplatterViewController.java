@@ -77,12 +77,6 @@ public class SplatterViewController implements Initializable {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterSidebar.fxml"));
         try {
-            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-            volumeOn.setPreserveRatio(true);
-            volumeOn.setFitHeight(40);
-            volumeOn.setFitWidth(40);
-            muteBtn.setGraphic(volumeOn);
-            
             VBox sidebar = loader.load();
 
             cont = loader.getController();
@@ -116,6 +110,21 @@ public class SplatterViewController implements Initializable {
             playerSplatter.setCycleCount(MediaPlayer.INDEFINITE);
             playerSplatter.setVolume(0.25);
             playerSplatter.setMute(MainMenuController.isMuted());
+            
+            if (!MainMenuController.isMuted()) {
+                ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+                volumeOn.setPreserveRatio(true);
+                volumeOn.setFitHeight(40);
+                volumeOn.setFitWidth(40);
+                muteBtn.setGraphic(volumeOn);
+
+            } else {
+                ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+                volumeOff.setPreserveRatio(true);
+                volumeOff.setFitHeight(50);
+                volumeOff.setFitWidth(50);
+                muteBtn.setGraphic(volumeOff);
+            }
             playerSplatter.play();
         } catch (IOException e) {
             e.printStackTrace();

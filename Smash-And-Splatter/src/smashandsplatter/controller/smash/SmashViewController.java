@@ -80,12 +80,6 @@ public class SmashViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-        volumeOn.setPreserveRatio(true);
-        volumeOn.setFitHeight(40);
-        volumeOn.setFitWidth(40);
-        muteBtn.setGraphic(volumeOn);
-        
         torque1 = new Torque();
         torque2 = new Torque();
         // makes sure they are behind everything
@@ -126,7 +120,24 @@ public class SmashViewController implements Initializable {
             Media musicSmash = new Media(path);
             playerSmash = new MediaPlayer(musicSmash);
             playerSmash.setCycleCount(MediaPlayer.INDEFINITE);
-            playerSmash.setMute(MainMenuController.isMuted());
+            
+            if (!MainMenuController.isMuted()) {
+                ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+                volumeOn.setPreserveRatio(true);
+                volumeOn.setFitHeight(40);
+                volumeOn.setFitWidth(40);
+                muteBtn.setGraphic(volumeOn);
+                playerSmash.setMute(MainMenuController.isMuted());
+
+            } else {
+                playerSmash.setMute(MainMenuController.isMuted());
+                ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+                volumeOff.setPreserveRatio(true);
+                volumeOff.setFitHeight(50);
+                volumeOff.setFitWidth(50);
+                muteBtn.setGraphic(volumeOff);
+            }
+            
             playerSmash.play();
         } catch(IOException e) {
             System.err.println("Could not read file!");
