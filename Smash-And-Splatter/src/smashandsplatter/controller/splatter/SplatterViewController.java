@@ -12,12 +12,14 @@ import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
@@ -34,6 +36,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
+import smashandsplatter.controller.mainMenu.MainMenuController;
 import smashandsplatter.models.Trajectory;
 
 /**
@@ -62,6 +65,8 @@ public class SplatterViewController implements Initializable {
     private MediaPlayer playerSucess;
     @FXML
     private MediaPlayer playerLose;
+    @FXML
+    private Button muteBtn;
     
     /**
      * Initializes the controller class.
@@ -72,6 +77,12 @@ public class SplatterViewController implements Initializable {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterSidebar.fxml"));
         try {
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            
             VBox sidebar = loader.load();
 
             cont = loader.getController();
@@ -104,6 +115,7 @@ public class SplatterViewController implements Initializable {
             playerSplatter = new MediaPlayer(musicSplatter);
             playerSplatter.setCycleCount(MediaPlayer.INDEFINITE);
             playerSplatter.setVolume(0.25);
+            playerSplatter.setMute(MainMenuController.isMuted());
             playerSplatter.play();
         } catch (IOException e) {
             e.printStackTrace();
@@ -261,6 +273,31 @@ public class SplatterViewController implements Initializable {
                 heart.setImage(new Image("file:src/smashandsplatter/resources/images/DeadHeart.png"));
             }
         }
+    }
+    
+    @FXML
+    private void handleMute(ActionEvent event) {
+        if (MainMenuController.isMuted()) {
+            MainMenuController.setMuted(false);
+            
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            playerSplatter.setMute(false);
+            
+            return;
+        }
+        
+        MainMenuController.setMuted(true);
+        
+        playerSplatter.setMute(MainMenuController.isMuted());
+        ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+        volumeOff.setPreserveRatio(true);
+        volumeOff.setFitHeight(50);
+        volumeOff.setFitWidth(50);
+        muteBtn.setGraphic(volumeOff);
     }
 
     /**

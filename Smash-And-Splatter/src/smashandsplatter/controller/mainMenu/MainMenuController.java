@@ -41,6 +41,9 @@ public class MainMenuController implements Initializable {
     private MediaPlayer playerStart;
     @FXML
     private ChoiceBox<Player> choiceBox;
+    @FXML
+    private Button muteBtn;
+
     
     public enum Player {
         ALIEN("Alien"), HUMAN("Human"), ZOMBIE("Zombie");
@@ -62,12 +65,30 @@ public class MainMenuController implements Initializable {
     }
     
     private static Player currPlayer = Player.HUMAN;
+    private static boolean muted = false;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (!muted) {
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            playerStart.setMute(muted);
+            
+        } else {
+            playerStart.setMute(muted);
+            ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+            volumeOff.setPreserveRatio(true);
+            volumeOff.setFitHeight(50);
+            volumeOff.setFitWidth(50);
+            muteBtn.setGraphic(volumeOff);
+        }
+        
         choiceBox.getItems().add(Player.HUMAN);
         choiceBox.getItems().add(Player.ALIEN);
         choiceBox.getItems().add(Player.ZOMBIE);
@@ -136,8 +157,43 @@ public class MainMenuController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    @FXML
+    void handleMute(ActionEvent event) {
+        if (muted) {
+            muted = false;
+            
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            playerStart.setMute(muted);
+            
+            return;
+        }
+        
+        muted = true;
+        
+        playerStart.setMute(muted);
+        ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+        volumeOff.setPreserveRatio(true);
+        volumeOff.setFitHeight(50);
+        volumeOff.setFitWidth(50);
+        muteBtn.setGraphic(volumeOff);
+    }
 
     public static Player getCurrPlayer() {
         return currPlayer;
     }
+
+    public static boolean isMuted() {
+        return muted;
+    }
+
+    public static void setMuted(boolean muted) {
+        MainMenuController.muted = muted;
+    }
+    
+    
 }

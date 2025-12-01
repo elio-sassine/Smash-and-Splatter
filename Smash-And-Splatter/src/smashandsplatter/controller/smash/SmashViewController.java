@@ -11,12 +11,14 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
@@ -36,6 +38,7 @@ import smashandsplatter.Main;
 import smashandsplatter.models.Torque;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import smashandsplatter.controller.mainMenu.MainMenuController;
 
 /**
  * FXML Controller class
@@ -66,15 +69,23 @@ public class SmashViewController implements Initializable {
     @FXML
     private MediaPlayer playerSmash;
     @FXML
-    private MediaPlayer playerSucess;
+    private MediaPlayer playerSuccess;
     @FXML
     private MediaPlayer playerLose;
+    @FXML
+    private Button muteBtn;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+        volumeOn.setPreserveRatio(true);
+        volumeOn.setFitHeight(40);
+        volumeOn.setFitWidth(40);
+        muteBtn.setGraphic(volumeOn);
+        
         torque1 = new Torque();
         torque2 = new Torque();
         // makes sure they are behind everything
@@ -115,6 +126,7 @@ public class SmashViewController implements Initializable {
             Media musicSmash = new Media(path);
             playerSmash = new MediaPlayer(musicSmash);
             playerSmash.setCycleCount(MediaPlayer.INDEFINITE);
+            playerSmash.setMute(MainMenuController.isMuted());
             playerSmash.play();
         } catch(IOException e) {
             System.err.println("Could not read file!");
@@ -160,8 +172,8 @@ public class SmashViewController implements Initializable {
             
                 String path = getClass().getResource("/smashandsplatter/resources/music/WinLevelMusic.mp3").toString();
                 Media musicSucess = new Media(path);
-                playerSucess = new MediaPlayer(musicSucess);
-                playerSucess.play();
+                playerSuccess = new MediaPlayer(musicSucess);
+                playerSuccess.play();
                 levelsPassed++;
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
@@ -274,6 +286,31 @@ public class SmashViewController implements Initializable {
                 heart.setImage(new Image("file:src/smashandsplatter/resources/images/DeadHeart.png"));
             }
         }
+    }
+    
+    @FXML
+    private void handleMute(ActionEvent event) {
+        if (MainMenuController.isMuted()) {
+            MainMenuController.setMuted(false);
+            
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            playerSmash.setMute(false);
+            
+            return;
+        }
+        
+        MainMenuController.setMuted(true);
+        
+        playerSmash.setMute(MainMenuController.isMuted());
+        ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+        volumeOff.setPreserveRatio(true);
+        volumeOff.setFitHeight(50);
+        volumeOff.setFitWidth(50);
+        muteBtn.setGraphic(volumeOff);
     }
 
     /**

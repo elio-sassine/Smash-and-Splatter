@@ -125,11 +125,7 @@ public class SmashCenterController {
     private Animation manGettingCrushed() {
         String pathToFormat = "file:src/smashandsplatter/resources/images/BoulderCrushDrawings/%sdown.png";
         KeyFrame[] keyFrames = new KeyFrame[2];
-        
-        System.out.println(String.format(
-                                "file:src/smashandsplatter/resources/images/AnimationMuscle%s/%smuscle1.png", 
-                                currPlayer, currPlayer
-        ));
+
         keyFrames[0] = new KeyFrame(Duration.ZERO, 
                 new KeyValue(person.imageProperty(), new Image(
                         String.format(
