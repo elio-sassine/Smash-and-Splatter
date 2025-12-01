@@ -39,7 +39,7 @@ public class MainMenuController implements Initializable {
     private ImageView titleImgView;
     @FXML
     private MediaPlayer playerStart;
-
+    @FXML
     private ChoiceBox<Player> choiceBox;
     
     public enum Player {
