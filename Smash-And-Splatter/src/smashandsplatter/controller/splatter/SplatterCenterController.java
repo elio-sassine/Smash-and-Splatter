@@ -43,6 +43,7 @@ public class SplatterCenterController {
     private Animation finalFailAnimation;
     private Animation finalSuccessAnimation;
     
+
     /**
      * Initializer for the FXML controller
      */

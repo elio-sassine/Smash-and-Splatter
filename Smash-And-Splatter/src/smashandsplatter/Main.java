@@ -46,6 +46,7 @@ public class Main extends Application {
 
             stage.setScene(sc);
             stage.setResizable(false);
+            stage.setTitle("Smash & Splatter");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
