@@ -101,7 +101,8 @@ public class SmashCenterController {
         RotateTransition rotate = new RotateTransition(Duration.seconds(1), boulder);
         
         // goofy ahh
-        rotate.setToAngle(10000000);
+        rotate.setFromAngle(0);
+        rotate.setToAngle(-720);
        
         PathTransition pathTransition = new PathTransition(Duration.seconds(timeToFall), path, boulder);
         pathTransition.setInterpolator(Interpolator.EASE_BOTH);
@@ -161,8 +162,8 @@ public class SmashCenterController {
         
         RotateTransition rotate = new RotateTransition(Duration.seconds(1), boulder);
         
-        // goofy ahh amount of rotations
-        rotate.setToAngle(10000000);
+        rotate.setFromAngle(0);
+        rotate.setToAngle(-720);
        
         PathTransition pathTransition = new PathTransition(Duration.seconds(timeToFall), path, boulder);
         pathTransition.setInterpolator(Interpolator.EASE_BOTH);
