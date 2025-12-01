@@ -7,7 +7,7 @@ package smashandsplatter.models;
 import java.util.Random;
 
 /**
- *
+ * A class representing Torque
  * @author eliob
  */
 public class Torque {
@@ -20,6 +20,9 @@ public class Torque {
     // in Nm
     private double torque;
     
+    /**
+     * Makes a torque with random values
+     */
     public Torque() {
         Random rand = new Random();
         
@@ -42,6 +45,12 @@ public class Torque {
 
     }
 
+    /**
+     * Makes a torque with pre-defined values (Only used for testing)
+     * @param force force in N
+     * @param distance distance in m
+     * @param angle angle in degrees
+     */
     public Torque(double force, double distance, double angle) {
         this.force = force;
         this.distance = distance;
@@ -50,22 +59,42 @@ public class Torque {
         this.torque = this.force * this.distance * Math.sin(Math.toRadians(angle));
     }
 
+    /**
+     * gets the force
+     * @return force in N
+     */
     public double getForce() {
         return force;
     }
 
+    /**
+     * gets the distance
+     * @return distance in m
+     */
     public double getDistance() {
         return distance;
     }
 
+    /**
+     * gets the angle
+     * @return angle in degrees
+     */
     public double getAngle() {
         return angle;
     }
 
+    /**
+     * gets the torque
+     * @return torque in Nm
+     */
     public double getTorque() {
         return torque;
     }    
 
+    /**
+     * gets the string representation of the force
+     * @return force to string
+     */
     @Override
     public String toString() {
         // place holder

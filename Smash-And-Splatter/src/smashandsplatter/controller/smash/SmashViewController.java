@@ -360,6 +360,10 @@ public class SmashViewController implements Initializable {
         return torque2;
     }   
 
+    /**
+     * sets the amount of levels passed, used to reset
+     * @param levelsPassed amount of levels passed
+     */
     public static void setLevelsPassed(int levelsPassed) {
         SmashViewController.levelsPassed = levelsPassed;
     }

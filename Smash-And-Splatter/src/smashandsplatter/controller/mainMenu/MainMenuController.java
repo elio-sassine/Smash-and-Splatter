@@ -27,7 +27,7 @@ import smashandsplatter.controller.splatter.SplatterViewController;
 /**
  * FXML Controller class
  *
- * @author Raluca
+ * @author Antonia
  */
 public class MainMenuController implements Initializable {
 
@@ -46,7 +46,9 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button muteBtn;
 
-    
+    /**
+     * Enum representing player types
+     */
     public enum Player {
         ALIEN("Alien"), HUMAN("Human"), ZOMBIE("Zombie");
 
@@ -55,11 +57,19 @@ public class MainMenuController implements Initializable {
         private Player(String displayName) {
             this.displayName = displayName;
         }
-
+        
+        /**
+         * gets the display name of the player
+         * @return string representation of player
+         */
         public String getDisplayName() {
             return displayName;
         }
 
+        /**
+         * gets the display name of the player
+         * @return string representation of player
+         */
         @Override 
         public String toString() {
             return displayName;
@@ -191,18 +201,28 @@ public class MainMenuController implements Initializable {
         volumeOff.setFitWidth(50);
         muteBtn.setGraphic(volumeOff);
     }
-
+    
+    /**
+     * current player
+     * @return Player
+     */
     public static Player getCurrPlayer() {
         return currPlayer;
     }
 
+    /**
+     * is muted or not
+     * @return boolean muted
+     */
     public static boolean isMuted() {
         return muted;
     }
 
+    /**
+     * sets muted state
+     * @param muted boolean defining mute state
+     */
     public static void setMuted(boolean muted) {
         MainMenuController.muted = muted;
     }
-    
-    
 }

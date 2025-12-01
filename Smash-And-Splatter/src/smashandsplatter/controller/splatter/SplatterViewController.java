@@ -333,6 +333,10 @@ public class SplatterViewController implements Initializable {
         return trajectory;
     }
 
+    /**
+     * sets the amounts of levels passed, used to reset
+     * @param levelsPassed int levels passed
+     */
     public static void setLevelsPassed(int levelsPassed) {
         SplatterViewController.levelsPassed = levelsPassed;
     }
