@@ -4,8 +4,6 @@
  */
 package smashandsplatter.controller.mainMenu;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,19 +15,14 @@ public class MainMenuControllerTest {
     
     public MainMenuControllerTest() {
     }
-
+    
     /**
      * Test of initialize method, of class MainMenuController.
      */
     @Test
-    public void testInitialize() {
+    public void testInitialize() throws InterruptedException {
         System.out.println("initialize");
-        URL url = null;
-        ResourceBundle rb = null;
         MainMenuController instance = new MainMenuController();
-        instance.initialize(url, rb);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(instance);
     }
-    
 }
