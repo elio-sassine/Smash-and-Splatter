@@ -113,6 +113,7 @@ public class SmashViewController implements Initializable {
                 // add fail code, usually unreachable
                 return;
             }
+            
             // add animation code on success
             Image img = new Image("file:src/smashandsplatter/resources/images/LevelPassed.png");
             ImageView imgView = new ImageView(img);
