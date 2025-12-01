@@ -359,4 +359,8 @@ public class SmashViewController implements Initializable {
     public static Torque getTorque2() {
         return torque2;
     }   
+
+    public static void setLevelsPassed(int levelsPassed) {
+        SmashViewController.levelsPassed = levelsPassed;
+    }
 }

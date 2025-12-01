@@ -332,6 +332,8 @@ public class SplatterViewController implements Initializable {
     public static Trajectory getTrajectory() {
         return trajectory;
     }
-    
-    
+
+    public static void setLevelsPassed(int levelsPassed) {
+        SplatterViewController.levelsPassed = levelsPassed;
+    }
 }

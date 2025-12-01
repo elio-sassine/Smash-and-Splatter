@@ -21,6 +21,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import smashandsplatter.Main;
+import smashandsplatter.controller.smash.SmashViewController;
+import smashandsplatter.controller.splatter.SplatterViewController;
 
 /**
  * FXML Controller class
@@ -135,7 +137,9 @@ public class MainMenuController implements Initializable {
             playerStart.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashView.fxml"));
             Parent root = loader.load();
-
+            SmashViewController cont = loader.getController();
+            cont.setLevelsPassed(0);
+            
             Scene sc = new Scene(root);
             
             Main.getCurrStage().setScene(sc);           
@@ -152,6 +156,8 @@ public class MainMenuController implements Initializable {
             playerStart.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/SplatterView.fxml"));
             Parent root = loader.load();
+            SplatterViewController cont = loader.getController();
+            cont.setLevelsPassed(0);
 
             Scene sc = new Scene(root);
             
