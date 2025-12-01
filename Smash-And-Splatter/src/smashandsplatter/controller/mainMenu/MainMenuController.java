@@ -72,22 +72,7 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (!muted) {
-            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-            volumeOn.setPreserveRatio(true);
-            volumeOn.setFitHeight(40);
-            volumeOn.setFitWidth(40);
-            muteBtn.setGraphic(volumeOn);
-            playerStart.setMute(muted);
-            
-        } else {
-            playerStart.setMute(muted);
-            ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
-            volumeOff.setPreserveRatio(true);
-            volumeOff.setFitHeight(50);
-            volumeOff.setFitWidth(50);
-            muteBtn.setGraphic(volumeOff);
-        }
+        
         
         choiceBox.getItems().add(Player.HUMAN);
         choiceBox.getItems().add(Player.ALIEN);
@@ -122,6 +107,24 @@ public class MainMenuController implements Initializable {
         Media musicStart = new Media(path);
         playerStart = new MediaPlayer(musicStart);
         playerStart.setCycleCount(MediaPlayer.INDEFINITE);
+        
+        if (!muted) {
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            playerStart.setMute(muted);
+            
+        } else {
+            playerStart.setMute(muted);
+            ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+            volumeOff.setPreserveRatio(true);
+            volumeOff.setFitHeight(50);
+            volumeOff.setFitWidth(50);
+            muteBtn.setGraphic(volumeOff);
+        }
+        
         playerStart.play();
     }    
 
