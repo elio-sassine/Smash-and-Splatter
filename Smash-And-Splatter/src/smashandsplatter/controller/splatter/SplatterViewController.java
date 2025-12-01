@@ -152,21 +152,36 @@ public class SplatterViewController implements Initializable {
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
-                levelsPassed++;
                 goToNextStage(triesLeft);
             });
                     
             Animation anim = centerCont.getFinalSuccessAnimation();
             anim.setOnFinished(e -> {
+                levelsPassed++;
                 anchorPane.getChildren().add(imgView);
                 root.setEffect(new GaussianBlur(5));
+                Label failLbl = new Label("Levels Passed: " + levelsPassed);
+                anchorPane.getChildren().add(failLbl);
+                
+                failLbl.setLayoutX(450);
+                failLbl.setLayoutY(400);
+                failLbl.setScaleX(2);
+                failLbl.setScaleY(2);
+                
+                DropShadow glow = new DropShadow();
+                glow.setColor(Color.WHITE);     // glow color
+                glow.setRadius(1);            // size of glow
+                glow.setSpread(1);
+                failLbl.setEffect(glow);
                 
                 playerSplatter.stop();
             
                 String path = getClass().getResource("/smashandsplatter/resources/music/WinLevelMusic.mp3").toString();
                 Media musicSucess = new Media(path);
                 playerSucess = new MediaPlayer(musicSucess);
+                playerSucess.setMute(MainMenuController.isMuted());
                 playerSucess.play();
+                
                 pause.play();
             });
             
@@ -214,6 +229,7 @@ public class SplatterViewController implements Initializable {
                 String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
                 Media musicLose = new Media(path);
                 playerLose = new MediaPlayer(musicLose);
+                playerLose.setMute(MainMenuController.isMuted());
                 playerLose.play();
                 
                 DropShadow glow = new DropShadow();
