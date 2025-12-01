@@ -144,13 +144,15 @@ public class SplatterSidebarController {
     @FXML
     void handleSubmit(ActionEvent event) {
         // We basically have no choice but to do a bunch of if statements if we want to highlight bad answers
-        // Unless JavaFx has validators (I don't think it does but I don't care enough to check, this is easier)
-        // I will for sure make a great software engineer trust me fo sho
+        // Unless JavaFx has validators
         
         // reset the reds
         for (Node child : root.getChildren()) {
             child.getStyleClass().removeAll("wrongButton");
         }
+        
+        errorLbl.setText("");
+
         
         // need this to go through all the if statements and still know if we got the right answer or not
         boolean isRight = true;

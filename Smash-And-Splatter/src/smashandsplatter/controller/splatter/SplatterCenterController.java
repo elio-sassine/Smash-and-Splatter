@@ -172,7 +172,8 @@ public class SplatterCenterController {
                             new Image(String.format(stringToFormat, i + 1))
                     ),
                     new KeyValue(pie.fitHeightProperty(), 1200),
-                    new KeyValue(pie.fitWidthProperty(), 1200)
+                    new KeyValue(pie.fitWidthProperty(), 1200),
+                    new KeyValue(pie.rotateProperty(), 0)
             );
         }
         
@@ -204,7 +205,8 @@ public class SplatterCenterController {
                             pie.imageProperty(), 
                             new Image(String.format(stringToFormat, i + 1))
                     ),
-                    new KeyValue(pie.yProperty(), pie.getY() + (i + 1) * 3)
+                    new KeyValue(pie.yProperty(), pie.getY() + (i + 1) * 3),
+                    new KeyValue(pie.rotateProperty(), 0)
             );
         }
         

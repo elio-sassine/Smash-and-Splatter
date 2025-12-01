@@ -84,9 +84,8 @@ public class SplatterViewController implements Initializable {
             }
             
             root.setRight(heartBox);
-            
-            root.setCenter(center);
             root.setLeft(sidebar);
+            root.setCenter(center);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
