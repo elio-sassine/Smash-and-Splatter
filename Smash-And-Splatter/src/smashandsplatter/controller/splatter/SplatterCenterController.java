@@ -22,6 +22,7 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import smashandsplatter.controller.mainMenu.MainMenuController;
 import smashandsplatter.models.Trajectory;
 
 /**
@@ -42,6 +43,7 @@ public class SplatterCenterController {
     private Trajectory trajectory;
     private Animation finalFailAnimation;
     private Animation finalSuccessAnimation;
+    private MainMenuController.Player currPlayer = MainMenuController.getCurrPlayer();
     
 
     /**
@@ -67,7 +69,11 @@ public class SplatterCenterController {
             root.getChildren().add(0, floor);
             root.setMouseTransparent(true);
             
-            receiver.setImage(new Image("file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie1.png"));
+            receiver.setImage(new Image(String.format(
+                    "file:src/smashandsplatter/resources/images/AnimationPie%s/%spie1.png",
+                    currPlayer,
+                    currPlayer
+            )));
             receiver.setX(trajectory.getDistance() * 15 - 60);
             receiver.setY(450);
             receiver.setMouseTransparent(true);
@@ -122,7 +128,7 @@ public class SplatterCenterController {
      */
     private Animation personPunchingAnimation() {
         double timeToThrow = 1.0;
-        String stringToFormat = "file:src/smashandsplatter/resources/images/AnimationPieHuman/Humanpie%d.png";
+        String stringToFormat = "file:src/smashandsplatter/resources/images/AnimationPie%s/%spie%d.png";
         KeyFrame[] keyFrames = new KeyFrame[11];
         
         for (int i = 0; i < 11; i++) {
@@ -130,7 +136,7 @@ public class SplatterCenterController {
                     Duration.seconds(i * timeToThrow / (10)),
                     new KeyValue(
                             receiver.imageProperty(), 
-                            new Image(String.format(stringToFormat, i + 1))
+                            new Image(String.format(stringToFormat, currPlayer, currPlayer, i + 1))
                     ), 
                     new KeyValue(pie.translateYProperty(), 510)
             );

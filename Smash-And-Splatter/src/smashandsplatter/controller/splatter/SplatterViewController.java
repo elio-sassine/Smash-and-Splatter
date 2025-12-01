@@ -103,6 +103,7 @@ public class SplatterViewController implements Initializable {
             Media musicSplatter = new Media(path);
             playerSplatter = new MediaPlayer(musicSplatter);
             playerSplatter.setCycleCount(MediaPlayer.INDEFINITE);
+            playerSplatter.setVolume(0.25);
             playerSplatter.play();
         } catch (IOException e) {
             e.printStackTrace();
