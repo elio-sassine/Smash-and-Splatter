@@ -51,6 +51,9 @@ public class SplatterCenterController {
         Platform.runLater(() -> {
             trajectory = SplatterViewController.getTrajectory();
             
+            pie.setImage(new Image("file:src/smashandsplatter/resources/images/Pie.png"));
+            pie.setTranslateX(75);
+            pie.setTranslateY(500 - trajectory.getyPos() * 5);
             pie.setFitHeight(75);
             pie.setFitWidth(75);
             pie.setMouseTransparent(true);
@@ -142,6 +145,8 @@ public class SplatterCenterController {
         
         // base pie sprite
         keyFramesBeforeScreen[0] = new KeyFrame(Duration.ZERO,
+                new KeyValue(pie.translateXProperty(), trajectory.getDistance() * 15 + 20),
+                new KeyValue(pie.translateYProperty(), 500),
                 new KeyValue(pie.fitHeightProperty(), 75),
                 new KeyValue(pie.fitWidthProperty(), 75),
                 new KeyValue(
@@ -156,10 +161,10 @@ public class SplatterCenterController {
                             pie.imageProperty(), 
                             new Image("file:src/smashandsplatter/resources/images/RestOfDrawings/Pieup.png")
                     ),
-                    new KeyValue(pie.translateXProperty(), -300),
-                    new KeyValue(pie.translateYProperty(), -300),
-                    new KeyValue(pie.fitHeightProperty(), 400),
-                    new KeyValue(pie.fitWidthProperty(), 400)
+                    new KeyValue(pie.translateXProperty(), -50),
+                    new KeyValue(pie.translateYProperty(), 0),
+                    new KeyValue(pie.fitHeightProperty(), 800),
+                    new KeyValue(pie.fitWidthProperty(), 800)
         );
         
         
@@ -171,6 +176,8 @@ public class SplatterCenterController {
                             pie.imageProperty(), 
                             new Image(String.format(stringToFormat, i + 1))
                     ),
+                    new KeyValue(pie.translateXProperty(), -300),
+                    new KeyValue(pie.translateYProperty(), -300),
                     new KeyValue(pie.fitHeightProperty(), 1200),
                     new KeyValue(pie.fitWidthProperty(), 1200),
                     new KeyValue(pie.rotateProperty(), 0)

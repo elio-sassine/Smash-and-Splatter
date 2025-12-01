@@ -166,7 +166,6 @@ public class SplatterSidebarController {
             double finalYVelocityAnswer = lockedFields.contains(finalYVelocity) ? trajectory.getFinalVelocity()[1] : Double.parseDouble(finalYVelocity.getText());
             double timeAnswer = lockedFields.contains(time) ? trajectory.getTime() : Double.parseDouble(time.getText());
 
-
             // convergent spaghetti
             if (!(trajectory.getDistance() + 0.1 >= xDistanceAnswer && trajectory.getDistance() - 0.1 <= xDistanceAnswer)) {
                 isRight = false;
