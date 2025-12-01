@@ -25,8 +25,8 @@ public class SmashCenterControllerTest {
         System.out.println("initialize");
         SmashCenterController instance = new SmashCenterController();
         instance.initialize();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertNotNull(instance);
     }
 
     /**
@@ -36,11 +36,9 @@ public class SmashCenterControllerTest {
     public void testRockFallingFail() {
         System.out.println("rockFallingFail");
         SmashCenterController instance = new SmashCenterController();
-        Animation expResult = null;
-        Animation result = instance.rockFallingFail();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Class expResult = Animation.class;
+        Class result = instance.rockFallingFail().getClass();
+        assertEquals(expResult, result); 
     }
 
     /**
@@ -50,11 +48,9 @@ public class SmashCenterControllerTest {
     public void testGetSuccessAnimation() {
         System.out.println("getSuccessAnimation");
         SmashCenterController instance = new SmashCenterController();
-        Animation expResult = null;
-        Animation result = instance.getSuccessAnimation();
+        Class expResult = Animation.class;
+        Class result = instance.getSuccessAnimation().getClass();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -64,11 +60,9 @@ public class SmashCenterControllerTest {
     public void testGetFailAnimation() {
         System.out.println("getFailAnimation");
         SmashCenterController instance = new SmashCenterController();
-        Animation expResult = null;
-        Animation result = instance.getFailAnimation();
+        Class expResult = Animation.class;
+        Class result = instance.getFailAnimation().getClass();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

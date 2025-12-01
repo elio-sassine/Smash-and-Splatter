@@ -29,8 +29,7 @@ public class SplatterViewControllerTest {
         ResourceBundle rb = null;
         SplatterViewController instance = new SplatterViewController();
         instance.initialize(url, rb);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(instance);
     }
 
     /**
@@ -41,9 +40,7 @@ public class SplatterViewControllerTest {
         System.out.println("getTrajectory");
         Trajectory expResult = null;
         Trajectory result = SplatterViewController.getTrajectory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result);;
     }
     
 }

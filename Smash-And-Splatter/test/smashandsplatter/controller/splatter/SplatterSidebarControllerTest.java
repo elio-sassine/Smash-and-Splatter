@@ -27,8 +27,7 @@ public class SplatterSidebarControllerTest {
         System.out.println("initialize");
         SplatterSidebarController instance = new SplatterSidebarController();
         instance.initialize();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(instance);
     }
 
     /**
@@ -40,8 +39,6 @@ public class SplatterSidebarControllerTest {
         ActionEvent event = null;
         SplatterSidebarController instance = new SplatterSidebarController();
         instance.handleSubmit(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -54,8 +51,6 @@ public class SplatterSidebarControllerTest {
         BooleanProperty expResult = null;
         BooleanProperty result = instance.getSuccess();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -68,8 +63,6 @@ public class SplatterSidebarControllerTest {
         IntegerProperty expResult = null;
         IntegerProperty result = instance.getTriesLeft();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

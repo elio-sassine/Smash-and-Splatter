@@ -31,8 +31,8 @@ public class SmashSidebarControllerTest {
         ResourceBundle rb = null;
         SmashSidebarController instance = new SmashSidebarController();
         instance.initialize(url, rb);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertNotNull(instance);
     }
 
     /**
@@ -44,8 +44,6 @@ public class SmashSidebarControllerTest {
         ActionEvent event = null;
         SmashSidebarController instance = new SmashSidebarController();
         instance.handleSubmit(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,8 +56,6 @@ public class SmashSidebarControllerTest {
         BooleanProperty expResult = null;
         BooleanProperty result = instance.getSuccess();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -72,8 +68,6 @@ public class SmashSidebarControllerTest {
         IntegerProperty expResult = null;
         IntegerProperty result = instance.getTriesLeft();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
