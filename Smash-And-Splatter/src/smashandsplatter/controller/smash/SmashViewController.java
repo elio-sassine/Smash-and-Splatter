@@ -25,6 +25,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
@@ -78,6 +79,10 @@ public class SmashViewController implements Initializable {
     private ImageView rockHint;
     @FXML
     private Button hintBtn;
+    @FXML
+    private Label hintLabel;
+    @FXML
+    private Label insLabel;
     
     /**
      * Initializes the controller class.
@@ -157,7 +162,7 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
-            rockHint.setImage(new Image("file:src/smashandsplatter/resources/images/WinPie.png"));
+            rockHint.setImage(new Image("file:src/smashandsplatter/resources/images/SmashWin.png"));
             
             PauseTransition delayBeforeLvlPassed = new PauseTransition(Duration.seconds(1));
             PauseTransition pt = new PauseTransition(Duration.seconds(5.5));
@@ -185,6 +190,8 @@ public class SmashViewController implements Initializable {
                 root.setEffect(effect);
                 muteBtn.setEffect(effect);
                 hintBtn.setEffect(effect);
+                hintLabel.setEffect(effect);
+                insLabel.setEffect(effect);
                 
                 Label failLbl = new Label("Levels Passed: " + levelsPassed);
                 anchorPane.getChildren().add(failLbl);
@@ -245,6 +252,7 @@ public class SmashViewController implements Initializable {
             PauseTransition delayBeforeLevelFail = new PauseTransition(Duration.seconds(1));
             delayBeforeLevelFail.setOnFinished(e -> {
                 rockHint.setImage(null);
+                hintLabel.setText(null);
                 playerSmash.stop();
                 
                 String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
@@ -259,6 +267,7 @@ public class SmashViewController implements Initializable {
                 Effect effect = new GaussianBlur(5);
                 root.setEffect(effect);
                 muteBtn.setEffect(effect);
+                insLabel.setEffect(effect);
             });
             
             PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(4));
@@ -346,28 +355,6 @@ public class SmashViewController implements Initializable {
         muteBtn.setGraphic(volumeOff);
     }
     
-    
-    @FXML
-    void handleHint(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/hintView.fxml"));
-        try {
-            Parent hint = loader.load();
-
-            Scene sc = new Scene(hint);
-            Stage stage = new Stage();
-            stage.setScene(sc);
-            stage.setTitle("Hint!");
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
-            System.err.println("File missing!");
-        } catch (Exception e) {
-            System.err.println("Unknown error!");
-            e.printStackTrace();
-        }
-    }
-
     /**
      * gets the first torque involved in the equation
      * @return Torque torque1
@@ -390,5 +377,30 @@ public class SmashViewController implements Initializable {
      */
     public static void setLevelsPassed(int levelsPassed) {
         SmashViewController.levelsPassed = levelsPassed;
+    }
+
+    @FXML
+    private void handleHint(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/hintView2.fxml"));
+        try {
+            Parent hint = loader.load();
+
+            Scene sc = new Scene(hint);
+            Stage stage = new Stage();
+            stage.setScene(sc);
+            stage.setTitle("Hint!");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.err.println("File missing!");
+        } catch (Exception e) {
+            System.err.println("Unknown error!");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleHint(ContextMenuEvent event) {
     }
 }

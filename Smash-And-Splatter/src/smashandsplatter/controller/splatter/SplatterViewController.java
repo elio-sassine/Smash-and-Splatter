@@ -60,11 +60,8 @@ public class SplatterViewController implements Initializable {
     private VBox heartBox;
     private boolean mainMenuLoaded = false;
     
-    @FXML
     private MediaPlayer playerSplatter;
-    @FXML
     private MediaPlayer playerSucess;
-    @FXML
     private MediaPlayer playerLose;
     @FXML
     private Button muteBtn;
@@ -72,6 +69,10 @@ public class SplatterViewController implements Initializable {
     private Button hintBtn;
     @FXML
     private ImageView pieHint;
+    @FXML
+    private Label hintLabel;
+    @FXML
+    private Label insLabel;
     
     /**
      * Initializes the controller class.
@@ -145,6 +146,7 @@ public class SplatterViewController implements Initializable {
             imgView.setY(50);
             
             pieHint.setImage(new Image("file:src/smashandsplatter/resources/images/WinPie.png"));
+            pieHint.setPreserveRatio(true);
 
             
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
@@ -161,6 +163,9 @@ public class SplatterViewController implements Initializable {
                 root.setEffect(effect);
                 muteBtn.setEffect(effect);
                 hintBtn.setEffect(effect);
+                insLabel.setEffect(effect);
+                hintLabel.setText(null);
+                pieHint.setImage(null);
                 Label failLbl = new Label("Levels Passed: " + levelsPassed);
                 anchorPane.getChildren().add(failLbl);
                 
@@ -207,6 +212,7 @@ public class SplatterViewController implements Initializable {
             imgView.setY(50);
             
             pieHint.setImage(new Image("file:src/smashandsplatter/resources/images/LosePie.png"));
+            pieHint.setPreserveRatio(true);
             
             Animation failAnim = centerCont.getFinalFailAnimation();
             
@@ -219,6 +225,7 @@ public class SplatterViewController implements Initializable {
             PauseTransition delayBeforeRemovingPieAndMute = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 1));
             delayBeforeRemovingPieAndMute.setOnFinished(e -> {
                 pieHint.setImage(null);
+                hintLabel.setText(null);
                 ((ImageView) muteBtn.getGraphic()).setImage(null);
             });
             
