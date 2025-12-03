@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -175,7 +176,11 @@ public class SmashViewController implements Initializable {
                 levelsPassed++;
                 
                 anchorPane.getChildren().add(imgView);
-                root.setEffect(new GaussianBlur(5));
+                
+                Effect effect = new GaussianBlur(5);
+                root.setEffect(effect);
+                muteBtn.setEffect(effect);
+                
                 Label failLbl = new Label("Levels Passed: " + levelsPassed);
                 anchorPane.getChildren().add(failLbl);
                 
@@ -242,7 +247,10 @@ public class SmashViewController implements Initializable {
                 
                 anchorPane.getChildren().add(imgView);
                 anchorPane.getChildren().add(levelsPassedLbl);
-                root.setEffect(new GaussianBlur(5));
+                
+                Effect effect = new GaussianBlur(5);
+                root.setEffect(effect);
+                muteBtn.setEffect(effect);
             });
             
             PauseTransition delayBeforeSentBack = new PauseTransition(Duration.seconds(4));
