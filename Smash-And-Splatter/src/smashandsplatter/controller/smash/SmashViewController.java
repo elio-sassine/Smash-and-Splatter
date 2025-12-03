@@ -399,8 +399,4 @@ public class SmashViewController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void handleHint(ContextMenuEvent event) {
-    }
 }

@@ -25,7 +25,7 @@
          <children>
             <Button fx:id="hintBtn" mnemonicParsing="false" onAction="#handleHint" prefHeight="137.0" prefWidth="142.0" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView fx:id="rockHint" fitHeight="100.0" fitWidth="100.0" onContextMenuRequested="#handleHint" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="rockHint" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/SmashDefault.png" />
                      </image>
