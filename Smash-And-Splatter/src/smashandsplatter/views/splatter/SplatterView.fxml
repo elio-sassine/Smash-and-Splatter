@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -10,6 +11,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="626.0" layoutX="-12.0" layoutY="-9.0" strokeType="INSIDE" width="1030.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c9700" height="100.0" layoutX="-4.0" layoutY="500.0" strokeType="INSIDE" width="1007.0" />
       <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" />
+      <Label layoutX="415.0" layoutY="20.0" style="-fx-text-fill: yellow;" text="Solve the missing variables!" />
       <Button fx:id="muteBtn" layoutX="930.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleMute" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" />
    </children>
 </AnchorPane>
