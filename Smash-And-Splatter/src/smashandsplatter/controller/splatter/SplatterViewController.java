@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
@@ -67,6 +68,10 @@ public class SplatterViewController implements Initializable {
     private MediaPlayer playerLose;
     @FXML
     private Button muteBtn;
+    @FXML
+    private Button hintBtn;
+    @FXML
+    private ImageView pieHint;
     
     /**
      * Initializes the controller class.
@@ -79,6 +84,8 @@ public class SplatterViewController implements Initializable {
         try {
             VBox sidebar = loader.load();
 
+            hintBtn.setViewOrder(-1);
+            muteBtn.setViewOrder(-1);
             cont = loader.getController();
             initializeHandlers();
             System.out.println(getClass().getResource("/smashandsplatter/views/splatter/SplatterCenter.fxml"));
@@ -137,6 +144,9 @@ public class SplatterViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
+            pieHint.setImage(new Image("file:src/smashandsplatter/resources/images/WinPie.png"));
+
+            
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(e -> {
                 int triesLeft = cont.getTriesLeft().get();
@@ -150,6 +160,7 @@ public class SplatterViewController implements Initializable {
                 Effect effect = new GaussianBlur(5);
                 root.setEffect(effect);
                 muteBtn.setEffect(effect);
+                hintBtn.setEffect(effect);
                 Label failLbl = new Label("Levels Passed: " + levelsPassed);
                 anchorPane.getChildren().add(failLbl);
                 
@@ -195,7 +206,7 @@ public class SplatterViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
-            System.out.println(levelsPassed);
+            pieHint.setImage(new Image("file:src/smashandsplatter/resources/images/LosePie.png"));
             
             Animation failAnim = centerCont.getFinalFailAnimation();
             
@@ -203,6 +214,12 @@ public class SplatterViewController implements Initializable {
             
             p.setOnFinished(e -> {
                 playerSplatter.stop();
+            });
+            
+            PauseTransition delayBeforeRemovingPieAndMute = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 1));
+            delayBeforeRemovingPieAndMute.setOnFinished(e -> {
+                pieHint.setImage(null);
+                ((ImageView) muteBtn.getGraphic()).setImage(null);
             });
             
             PauseTransition pt = new PauseTransition(Duration.seconds(trajectory.getTime() / 2 + 2.5));
@@ -249,7 +266,7 @@ public class SplatterViewController implements Initializable {
                     e.printStackTrace();
                 }
             });
-            ParallelTransition parallel = new ParallelTransition(failAnim, pt, p, delayBeforeSentBack);
+            ParallelTransition parallel = new ParallelTransition(failAnim, pt, p, delayBeforeSentBack, delayBeforeRemovingPieAndMute);
             
             parallel.play();
         });
@@ -313,6 +330,27 @@ public class SplatterViewController implements Initializable {
         volumeOff.setFitHeight(50);
         volumeOff.setFitWidth(50);
         muteBtn.setGraphic(volumeOff);
+    }
+    
+    @FXML
+    void handleHint(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/hintView.fxml"));
+        try {
+            Parent hint = loader.load();
+
+            Scene sc = new Scene(hint);
+            Stage stage = new Stage();
+            stage.setScene(sc);
+            stage.setTitle("Hint!");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.err.println("File missing!");
+        } catch (Exception e) {
+            System.err.println("Unknown error!");
+            e.printStackTrace();
+        }
     }
 
     /**

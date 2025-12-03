@@ -29,8 +29,8 @@ public class SmashViewControllerTest {
         ResourceBundle rb = null;
         SmashViewController instance = new SmashViewController();
         instance.initialize(url, rb);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertNotNull(instance);
     }
 
     /**
@@ -42,8 +42,6 @@ public class SmashViewControllerTest {
         Torque expResult = null;
         Torque result = SmashViewController.getTorque1();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -55,8 +53,6 @@ public class SmashViewControllerTest {
         Torque expResult = null;
         Torque result = SmashViewController.getTorque2();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

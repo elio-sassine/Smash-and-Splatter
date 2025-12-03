@@ -2,16 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../globalStyles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smashandsplatter.controller.splatter.SplatterViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="626.0" layoutX="-12.0" layoutY="-9.0" strokeType="INSIDE" width="1030.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c9700" height="100.0" layoutX="-4.0" layoutY="500.0" strokeType="INSIDE" width="1007.0" />
-      <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="626.0" layoutX="-12.0" layoutY="-9.0" mouseTransparent="true" strokeType="INSIDE" width="1030.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c9700" height="100.0" layoutX="-4.0" layoutY="500.0" mouseTransparent="true" strokeType="INSIDE" width="1007.0" />
       <Label layoutX="415.0" layoutY="20.0" style="-fx-text-fill: yellow;" text="Solve the missing variables!" />
+      <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" />
+      <Button fx:id="hintBtn" layoutX="30.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleHint" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fx:id="pieHint" fitHeight="150.0" fitWidth="200.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/PieDefault.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
       <Button fx:id="muteBtn" layoutX="930.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleMute" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" />
    </children>
 </AnchorPane>

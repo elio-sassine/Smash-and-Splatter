@@ -61,8 +61,10 @@ public class SplatterCenterController {
             pie.setFitWidth(75);
             pie.setMouseTransparent(true);
             
+            
             Rectangle floor = new Rectangle(-200, 500 - 80 - trajectory.getyPos() * 5 + 125, 400, 500);
             floor.setFill(new Color(0.1098, 0.5922, 0.0, 1.0));
+            floor.setViewOrder(100);
             floor.setStroke(null);
             floor.setMouseTransparent(true);
             
