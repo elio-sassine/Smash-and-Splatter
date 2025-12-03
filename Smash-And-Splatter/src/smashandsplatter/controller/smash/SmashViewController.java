@@ -39,6 +39,7 @@ import smashandsplatter.Main;
 import smashandsplatter.models.Torque;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Modality;
 import smashandsplatter.controller.mainMenu.MainMenuController;
 import static smashandsplatter.controller.mainMenu.MainMenuController.initializeMuteButton;
 
@@ -68,14 +69,15 @@ public class SmashViewController implements Initializable {
     private Rectangle sky;
     @FXML
     private Rectangle grass;
-    @FXML
     private MediaPlayer playerSmash;
-    @FXML
     private MediaPlayer playerSuccess;
-    @FXML
     private MediaPlayer playerLose;
     @FXML
     private Button muteBtn;
+    @FXML
+    private ImageView rockHint;
+    @FXML
+    private Button hintBtn;
     
     /**
      * Initializes the controller class.
@@ -91,7 +93,8 @@ public class SmashViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/smash/SmashSidebar.fxml"));
         try {
             VBox sidebar = loader.load();
-
+            hintBtn.setViewOrder(-1);
+            
             root.setLeft(sidebar);
             
             cont = loader.getController();
@@ -154,6 +157,7 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
+            rockHint.setImage(new Image("file:src/smashandsplatter/resources/images/WinPie.png"));
             
             PauseTransition delayBeforeLvlPassed = new PauseTransition(Duration.seconds(1));
             PauseTransition pt = new PauseTransition(Duration.seconds(5.5));
@@ -180,6 +184,7 @@ public class SmashViewController implements Initializable {
                 Effect effect = new GaussianBlur(5);
                 root.setEffect(effect);
                 muteBtn.setEffect(effect);
+                hintBtn.setEffect(effect);
                 
                 Label failLbl = new Label("Levels Passed: " + levelsPassed);
                 anchorPane.getChildren().add(failLbl);
@@ -221,6 +226,8 @@ public class SmashViewController implements Initializable {
             imgView.setX(250);
             imgView.setY(50);
             
+            rockHint.setImage(new Image("file:src/smashandsplatter/resources/images/SmashLose.png"));
+            
             Label levelsPassedLbl = new Label("Levels Passed: " + levelsPassed);
             levelsPassedLbl.setLayoutX(450);
             levelsPassedLbl.setLayoutY(400);
@@ -237,6 +244,7 @@ public class SmashViewController implements Initializable {
             
             PauseTransition delayBeforeLevelFail = new PauseTransition(Duration.seconds(1));
             delayBeforeLevelFail.setOnFinished(e -> {
+                rockHint.setImage(null);
                 playerSmash.stop();
                 
                 String path = getClass().getResource("/smashandsplatter/resources/music/LoseLevelMusic.mp3").toString();
@@ -336,6 +344,28 @@ public class SmashViewController implements Initializable {
         volumeOff.setFitHeight(50);
         volumeOff.setFitWidth(50);
         muteBtn.setGraphic(volumeOff);
+    }
+    
+    
+    @FXML
+    void handleHint(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/smashandsplatter/views/splatter/hintView.fxml"));
+        try {
+            Parent hint = loader.load();
+
+            Scene sc = new Scene(hint);
+            Stage stage = new Stage();
+            stage.setScene(sc);
+            stage.setTitle("Hint!");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.err.println("File missing!");
+        } catch (Exception e) {
+            System.err.println("Unknown error!");
+            e.printStackTrace();
+        }
     }
 
     /**

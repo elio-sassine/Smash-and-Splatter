@@ -11,8 +11,8 @@
    <children>
       <HBox alignment="TOP_CENTER" minHeight="100.0" spacing="15.0">
          <children>
-            <Label fx:id="torque2Text" alignment="CENTER" contentDisplay="CENTER" text="Label" textAlignment="CENTER" />
             <Label fx:id="torque1Text" alignment="CENTER" contentDisplay="CENTER" text="Label" textAlignment="CENTER" />
+            <Label fx:id="torque2Text" alignment="CENTER" contentDisplay="CENTER" text="Label" textAlignment="CENTER" />
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
