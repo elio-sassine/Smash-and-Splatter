@@ -120,22 +120,7 @@ public class MainMenuController implements Initializable {
         playerStart = new MediaPlayer(musicStart);
         playerStart.setCycleCount(MediaPlayer.INDEFINITE);
         
-        if (!muted) {
-            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-            volumeOn.setPreserveRatio(true);
-            volumeOn.setFitHeight(40);
-            volumeOn.setFitWidth(40);
-            muteBtn.setGraphic(volumeOn);
-            playerStart.setMute(muted);
-            
-        } else {
-            playerStart.setMute(muted);
-            ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
-            volumeOff.setPreserveRatio(true);
-            volumeOff.setFitHeight(50);
-            volumeOff.setFitWidth(50);
-            muteBtn.setGraphic(volumeOff);
-        }
+        initializeMuteButton(playerStart, muteBtn);
         
         playerStart.play();
     }    
@@ -224,5 +209,28 @@ public class MainMenuController implements Initializable {
      */
     public static void setMuted(boolean muted) {
         MainMenuController.muted = muted;
+    }
+    
+    /**
+     * initializes the mute button for all the controllers
+     * @param player 
+     */
+    public static void initializeMuteButton(MediaPlayer player, Button muteBtn) {
+        if (!muted) {
+            ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
+            volumeOn.setPreserveRatio(true);
+            volumeOn.setFitHeight(40);
+            volumeOn.setFitWidth(40);
+            muteBtn.setGraphic(volumeOn);
+            player.setMute(muted);
+            return;
+        } 
+        
+        player.setMute(muted);
+        ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
+        volumeOff.setPreserveRatio(true);
+        volumeOff.setFitHeight(50);
+        volumeOff.setFitWidth(50);
+        muteBtn.setGraphic(volumeOff);
     }
 }

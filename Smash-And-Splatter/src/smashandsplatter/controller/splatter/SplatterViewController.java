@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import smashandsplatter.Main;
 import smashandsplatter.controller.mainMenu.MainMenuController;
+import static smashandsplatter.controller.mainMenu.MainMenuController.initializeMuteButton;
 import smashandsplatter.models.Trajectory;
 
 /**
@@ -111,20 +112,8 @@ public class SplatterViewController implements Initializable {
             playerSplatter.setVolume(0.25);
             playerSplatter.setMute(MainMenuController.isMuted());
             
-            if (!MainMenuController.isMuted()) {
-                ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-                volumeOn.setPreserveRatio(true);
-                volumeOn.setFitHeight(40);
-                volumeOn.setFitWidth(40);
-                muteBtn.setGraphic(volumeOn);
+            initializeMuteButton(playerSplatter, muteBtn);
 
-            } else {
-                ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
-                volumeOff.setPreserveRatio(true);
-                volumeOff.setFitHeight(50);
-                volumeOff.setFitWidth(50);
-                muteBtn.setGraphic(volumeOff);
-            }
             playerSplatter.play();
         } catch (IOException e) {
             e.printStackTrace();

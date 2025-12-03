@@ -39,6 +39,7 @@ import smashandsplatter.models.Torque;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import smashandsplatter.controller.mainMenu.MainMenuController;
+import static smashandsplatter.controller.mainMenu.MainMenuController.initializeMuteButton;
 
 /**
  * FXML Controller class
@@ -121,22 +122,7 @@ public class SmashViewController implements Initializable {
             playerSmash = new MediaPlayer(musicSmash);
             playerSmash.setCycleCount(MediaPlayer.INDEFINITE);
             
-            if (!MainMenuController.isMuted()) {
-                ImageView volumeOn = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOn.png"));
-                volumeOn.setPreserveRatio(true);
-                volumeOn.setFitHeight(40);
-                volumeOn.setFitWidth(40);
-                muteBtn.setGraphic(volumeOn);
-                playerSmash.setMute(MainMenuController.isMuted());
-
-            } else {
-                playerSmash.setMute(MainMenuController.isMuted());
-                ImageView volumeOff = new ImageView(new Image("file:src/smashandsplatter/resources/images/VolumeOff.png"));
-                volumeOff.setPreserveRatio(true);
-                volumeOff.setFitHeight(50);
-                volumeOff.setFitWidth(50);
-                muteBtn.setGraphic(volumeOff);
-            }
+            initializeMuteButton(playerSmash, muteBtn);
             
             playerSmash.play();
         } catch(IOException e) {
